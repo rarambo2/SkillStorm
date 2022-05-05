@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService", "FlightService.csproj", "{BEF7D106-A5B3-4148-B2C9-ABD2885762E1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{79F5C138-EFBB-4A5B-8C4B-D3311F9E901B} = {79F5C138-EFBB-4A5B-8C4B-D3311F9E901B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightService.Library", "..\FlightService.Library\FlightService.Library.csproj", "{79F5C138-EFBB-4A5B-8C4B-D3311F9E901B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEF7D106-A5B3-4148-B2C9-ABD2885762E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF7D106-A5B3-4148-B2C9-ABD2885762E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF7D106-A5B3-4148-B2C9-ABD2885762E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF7D106-A5B3-4148-B2C9-ABD2885762E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F5C138-EFBB-4A5B-8C4B-D3311F9E901B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F5C138-EFBB-4A5B-8C4B-D3311F9E901B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F5C138-EFBB-4A5B-8C4B-D3311F9E901B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F5C138-EFBB-4A5B-8C4B-D3311F9E901B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0EED2414-80F9-4D5D-8FF0-CD1D588B3528}
+	EndGlobalSection
+EndGlobal
