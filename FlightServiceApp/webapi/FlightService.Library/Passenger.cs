@@ -32,6 +32,6 @@ namespace FlightService.Library
         public int? Age { get; set; }
         public int Id { get; set; }
 
-        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; } = null!;
     }
 }

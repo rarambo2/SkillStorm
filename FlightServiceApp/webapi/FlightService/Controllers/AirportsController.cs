@@ -13,47 +13,50 @@ namespace FlightService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingsController : ControllerBase
+    public class AirportsController : ControllerBase
     {
         private readonly FSContext _context;
 
-        public BookingsController(FSContext context)
+        public AirportsController(FSContext context)
         {
             _context = context;
         }
 
-        // GET: api/Bookings
+        // GET: api/Airports
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
+        public async Task<ActionResult<IEnumerable<Airport>>> GetAirports()
         {
-            return await _context.Bookings.ToListAsync();
+            return await _context.Airports.ToListAsync();
         }
 
-        // GET: api/Bookings/5
+        // GET: api/Airports/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Booking>> GetBooking(int id)
+        public async Task<ActionResult<Airport>> GetAirport(int id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
+            var airport = await _context
+                .Airports.Include(f => f.ArrivingFlights)
+                .Include(f => f.DepartingFlights)
+                .FirstAsync(i => i.Id == id);
 
-            if (booking == null)
+            if (airport == null)
             {
                 return NotFound();
             }
 
-            return booking;
+            return airport;
         }
 
-        // PUT: api/Bookings/5
+        // PUT: api/Airports/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBooking(int id, Booking booking)
+        public async Task<IActionResult> PutAirport(int id, Airport airport)
         {
-            if (id != booking.Id)
+            if (id != airport.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(booking).State = EntityState.Modified;
+            _context.Entry(airport).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +64,7 @@ namespace FlightService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookingExists(id))
+                if (!AirportExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +77,36 @@ namespace FlightService.Controllers
             return NoContent();
         }
 
-        // POST: api/Bookings
+        // POST: api/Airports
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(Booking booking)
+        public async Task<ActionResult<Airport>> PostAirport(Airport airport)
         {
-            _context.Bookings.Add(booking);
+            _context.Airports.Add(airport);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBooking", new { id = booking.Id }, booking);
+            return CreatedAtAction("GetAirport", new { id = airport.Id }, airport);
         }
 
-        // DELETE: api/Bookings/5
+        // DELETE: api/Airports/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBooking(int id)
+        public async Task<IActionResult> DeleteAirport(int id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking == null)
+            var airport = await _context.Airports.FindAsync(id);
+            if (airport == null)
             {
                 return NotFound();
             }
 
-            _context.Bookings.Remove(booking);
+            _context.Airports.Remove(airport);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool BookingExists(int id)
+        private bool AirportExists(int id)
         {
-            return _context.Bookings.Any(e => e.Id == id);
+            return _context.Airports.Any(e => e.Id == id);
         }
     }
 }

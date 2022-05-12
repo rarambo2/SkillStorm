@@ -13,47 +13,47 @@ namespace FlightService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PassengersController : ControllerBase
+    public class BookingsController : ControllerBase
     {
         private readonly FSContext _context;
 
-        public PassengersController(FSContext context)
+        public BookingsController(FSContext context)
         {
             _context = context;
         }
 
-        // GET: api/Passengers
+        // GET: api/Bookings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Passenger>>> GetPassengers()
+        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings()
         {
-            return await _context.Passengers.ToListAsync();
+            return await _context.Bookings.ToListAsync();
         }
 
-        // GET: api/Passengers/5
+        // GET: api/Bookings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Passenger>> GetPassenger(int id)
+        public async Task<ActionResult<Booking>> GetBooking(int id)
         {
-            var passenger = await _context.Passengers.FindAsync(id);
-
-            if (passenger == null)
+            var booking = await _context.Bookings.FindAsync(id);
+            //IEnumerable<Booking> bookings = from Booking in _context.Bookings
+            if (booking == null)
             {
                 return NotFound();
             }
 
-            return passenger;
+            return booking;
         }
 
-        // PUT: api/Passengers/5
+        // PUT: api/Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPassenger(int id, Passenger passenger)
+        public async Task<IActionResult> PutBooking(int id, Booking booking)
         {
-            if (id != passenger.Id)
+            if (id != booking.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(passenger).State = EntityState.Modified;
+            _context.Entry(booking).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace FlightService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PassengerExists(id))
+                if (!BookingExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +74,36 @@ namespace FlightService.Controllers
             return NoContent();
         }
 
-        // POST: api/Passengers
+        // POST: api/Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Passenger>> PostPassenger(Passenger passenger)
+        public async Task<ActionResult<Booking>> PostBooking(Booking booking)
         {
-            _context.Passengers.Add(passenger);
+            _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPassenger", new { id = passenger.Id }, passenger);
+            return CreatedAtAction("GetBooking", new { id = booking.Id }, booking);
         }
 
-        // DELETE: api/Passengers/5
+        // DELETE: api/Bookings/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePassenger(int id)
+        public async Task<IActionResult> DeleteBooking(int id)
         {
-            var passenger = await _context.Passengers.FindAsync(id);
-            if (passenger == null)
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null)
             {
                 return NotFound();
             }
 
-            _context.Passengers.Remove(passenger);
+            _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PassengerExists(int id)
+        private bool BookingExists(int id)
         {
-            return _context.Passengers.Any(e => e.Id == id);
+            return _context.Bookings.Any(e => e.Id == id);
         }
     }
 }

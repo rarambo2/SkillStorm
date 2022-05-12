@@ -10,6 +10,22 @@ ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
 
+var corsPolicy = "Cors";
+
+/*policy.WithOrigins("https://localhost:3000", "https://localhost:7072").SetIsOriginAllowedToAllowWildcardSubdomains();
+*/
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy,
+        policy =>
+        {
+            policy.AllowAnyOrigin();
+            policy.AllowAnyMethod();
+            policy.AllowAnyHeader();
+        });
+});
+
 builder.Services.AddControllers();
 Console.WriteLine(configuration.GetConnectionString("FSContext"));
 builder.Services.AddDbContext<FSContext>(options =>
@@ -37,6 +53,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicy);
 
 app.UseAuthorization();
 

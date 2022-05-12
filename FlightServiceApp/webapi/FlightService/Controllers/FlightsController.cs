@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FlightService;
 using FlightService.Library;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace FlightService.Controllers
 {
@@ -33,7 +35,14 @@ namespace FlightService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Flight>> GetFlight(int id)
         {
-            var flight = await _context.Flights.FindAsync(id);
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles,
+                WriteIndented = true
+            };
+            var flight = await _context.Flights
+                .Include(f => f.ArrivalAirport)
+                .Include(f => f.DepartureAirport).FirstAsync(f => f.Id == id);
 
             if (flight == null)
             {
@@ -41,6 +50,18 @@ namespace FlightService.Controllers
             }
 
             return flight;
+        }
+        // GET: api/Flights/5/Passenger
+        [HttpGet("{id}/Passenger")]
+        public async Task<ActionResult<IEnumerable<Flight>>> GetPassengerFlights(int id)
+        {
+            var flights = _context.Flights
+                .Join(_context.Bookings.Where(x => x.PassengerId == id),
+                x => x.Id, y => y.FlightId, (x, y) => x)
+                .Include(x => x.ArrivalAirport)
+                .Include(x => x.DepartureAirport);
+
+            return await flights.ToListAsync<Flight>(); ;   
         }
 
         // PUT: api/Flights/5

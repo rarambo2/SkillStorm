@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace FlightService.Library
 {
@@ -27,9 +28,9 @@ namespace FlightService.Library
 
         public string Municipality { get; set; } = null!;
 
-
-        public virtual ICollection<Flight> ArrivingFlights { get; set; }
-
-        public virtual ICollection<Flight> DepartingFlights { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Flight> ArrivingFlights { get; set; } = null!;
+        [JsonIgnore]
+        public virtual ICollection<Flight> DepartingFlights { get; set; } = null!;
     }
 }

@@ -49,6 +49,19 @@ namespace FlightService
                 entity.Property(e => e.Municipality)
                     .HasColumnType("VARCHAR")
                     .HasMaxLength(50);
+
+                entity.HasMany(f => f.ArrivingFlights)
+                    .WithOne();
+
+                entity.HasMany(f => f.DepartingFlights)
+                    .WithOne();
+
+                entity.Navigation(f => f.ArrivingFlights)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+                entity.Navigation(f => f.DepartingFlights)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -64,6 +77,11 @@ namespace FlightService
                     .HasForeignKey(d => d.PassengerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Bookings_Passengers");
+
+                entity.Navigation(d => d.Passenger)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+                entity.Navigation(d => d.Flight)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
             });
 
             modelBuilder.Entity<Flight>(entity =>
@@ -72,19 +90,30 @@ namespace FlightService
 
                 entity.Property(e => e.DepartureDate).HasColumnType("datetime");
 
-
-                entity.HasOne(d => d.ArrivalAirport)
-                    .WithMany(p => p.ArrivingFlights)
-                    .HasForeignKey(d => d.ArrivalAirportId)
+                entity.HasOne(x => x.ArrivalAirport)
+                    .WithMany(x => x.ArrivingFlights)
+                    .HasForeignKey(b => b.ArrivalAirportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Flights_Airports_ArrivalId");
 
-                entity.HasOne(d => d.DepartureAirport)
-                    .WithMany(p => p.DepartingFlights)
+               
+                entity.HasOne<Airport>(d => d.DepartureAirport)
+                    .WithMany(x => x.DepartingFlights)
                     .HasForeignKey(d => d.DepartureAirportId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Flights_DepartureId");
+                    .HasConstraintName("FK_Flights_Airports_DepartureId");
+
+                entity.Navigation(d => d.ArrivalAirport)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+                entity.Navigation(d => d.DepartureAirport)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+
+                entity.Navigation(d => d.Bookings)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+
             });
+
+
 
             modelBuilder.Entity<Passenger>(entity =>
             {
@@ -110,6 +139,10 @@ namespace FlightService
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasComment("Passenger's Last Name");
+
+                entity.Navigation(e => e.Bookings)
+                    .UsePropertyAccessMode(PropertyAccessMode.Property);
+
 
             });
         }

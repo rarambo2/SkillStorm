@@ -21,6 +21,6 @@ namespace FlightService.Library
         public virtual Airport ArrivalAirport { get; set; } = null!;
 
         public virtual Airport DepartureAirport { get; set; } = null!;
-        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; } = null!;
     }
 }
