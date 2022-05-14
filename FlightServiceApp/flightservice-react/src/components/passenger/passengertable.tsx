@@ -15,37 +15,28 @@ type PassengerTableState = {
 
 class PassengerTable extends Component<PassengerTableProps, PassengerTableState> {
     render() {
-    //   const filterText = this.props.filterText;
-  
-    //   const rows: Array<ReactElement<any, any>> = [];
-    //   this.props.passengers.forEach((passenger: Passenger) => {
-        // if(typeof passenger === undefined || typeof passenger.FirstName === undefined || typeof passenger.LastName === undefined){
-        //     return;
-        // }
-        // else if (filterText != "" 
-        //     && passenger.FirstName.indexOf(filterText) === -1 
-        //     && passenger.LastName.indexOf(filterText) === -1) {
-        //     return;
-        // }
-    //     rows.push(
-    //       <PassengerRow
-    //         passenger={passenger}
-    //         key={passenger.Id}
-    //       />
-    //     );
-    //   });
-  
+      const filterText = this.props.filterText.toLowerCase();
+      let filteredlist:Passenger[] = this.props.passengers.filter((p:Passenger) => {
+        if(filterText == "" 
+          || p.FirstName.toLowerCase().indexOf(filterText) !== -1 
+          || p.LastName.toLowerCase().indexOf(filterText) !== -1){
+            return true;
+          }
+          else{return false;}
+      })
       return (
         <table className="table table-hover table-bordered">
           <thead>
             <PassengerTableColumns />
           </thead>
           <tbody>
-              {this.props.passengers.map( (passenger:Passenger) => (
+              {filteredlist.map( (passenger:Passenger) => (
                 <PassengerRow 
                   passenger={passenger} 
                   key = {passenger.Id} 
-                  refreshHandler={this.props.refreshHandler}/>
+                  refreshHandler={this.props.refreshHandler}
+                  
+                  />
               ))}
 
           </tbody>

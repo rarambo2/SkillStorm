@@ -23,7 +23,6 @@ type PassengerDeleteButtonProps = {
     }
 
     handleDeleteRowChange(){
-        console.log("handleDeleteRowChange");
         APIService.deletePassenger(this.props.pId)
         .then((response) => {
             this.props.refreshHandler();

@@ -29,14 +29,15 @@ class PassengerSearchBar extends PureComponent<PassengerSearchBarProps, Passenge
  
     render() {
       return (
-        <form>
+        <div className="container-fluid p-3">
           <input
             type="text"
             placeholder="Search..."
+            className="container-fluid"
             value={this.state.filterText}
             onChange={this.handleFilterTextChange}
           />
-        </form>
+        </div>
       );
     }
   }
