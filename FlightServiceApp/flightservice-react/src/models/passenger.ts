@@ -2,7 +2,7 @@ interface Passenger {
     Id: number;
     FirstName: string;
     LastName: string;
-    Occupation: string;
+    Job: string;
     Email: string;
     Age: number;
 }

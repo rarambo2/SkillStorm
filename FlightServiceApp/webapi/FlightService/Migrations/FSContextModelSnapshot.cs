@@ -69,7 +69,7 @@ namespace FlightService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Airports");
+                    b.ToTable("Airports", (string)null);
                 });
 
             modelBuilder.Entity("FlightService.Library.Booking", b =>
@@ -92,7 +92,7 @@ namespace FlightService.Migrations
 
                     b.HasIndex("PassengerId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("FlightService.Library.Flight", b =>
@@ -127,7 +127,7 @@ namespace FlightService.Migrations
 
                     b.HasIndex("DepartureAirportId");
 
-                    b.ToTable("Flights");
+                    b.ToTable("Flights", (string)null);
                 });
 
             modelBuilder.Entity("FlightService.Library.Passenger", b =>
@@ -172,7 +172,7 @@ namespace FlightService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Passengers");
+                    b.ToTable("Passengers", (string)null);
                 });
 
             modelBuilder.Entity("FlightService.Library.Booking", b =>

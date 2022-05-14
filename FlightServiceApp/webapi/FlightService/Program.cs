@@ -26,7 +26,12 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    options.JsonSerializerOptions.WriteIndented = true;
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+});
 Console.WriteLine(configuration.GetConnectionString("FSContext"));
 builder.Services.AddDbContext<FSContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("FSContext")));

@@ -101,12 +101,12 @@ namespace FlightService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePassenger(int id)
         {
-            var passenger = await _context.Passengers.FindAsync(id);
+            var passenger = await _context.Passengers.Include(x => x.Bookings).SingleAsync(x => x.Id == id);
             if (passenger == null)
             {
                 return NotFound();
             }
-
+            _context.Bookings.RemoveRange(passenger.Bookings);
             _context.Passengers.Remove(passenger);
             await _context.SaveChangesAsync();
 
