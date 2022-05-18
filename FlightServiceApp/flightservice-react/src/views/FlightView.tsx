@@ -38,9 +38,7 @@ class FlightView extends React.Component<HomeViewProps, HomeViewState> {
       return (
           <div className="App container">
             <h2>Flights</h2>
-            <PassengerList 
-              passengers={this.state.allPassengers} 
-              refreshHandler={this.handleListRefresh} />
+            <PassengerList  />
           </div>
   
       );      

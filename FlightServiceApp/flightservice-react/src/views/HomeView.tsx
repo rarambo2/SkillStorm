@@ -1,60 +1,54 @@
-import React, { MouseEventHandler } from 'react';
-import APIService from '../services/APIService'
-import Passenger from "../models/passenger"
+// import React from 'react';
+// import APIService from '../services/APIService'
+// import Passenger from "../models/passenger"
 import PassengerList from "../components/passenger/passengerlist";
-
+import PassengerAddForm from "../components/passenger/passengeraddform"; 
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { isFulfilled } from "@reduxjs/toolkit";
 
 
 type HomeViewProps = {
 };
 
 type HomeViewState = {
-    allPassengers: Passenger[];
+    //allPassengers: Passenger[];
 }
 
-class HomeView extends React.Component<HomeViewProps, HomeViewState> {
-    constructor(props:HomeViewProps){
-        super(props)
-        this.state = {allPassengers : []};
-        this.handleListRefresh = this.handleListRefresh.bind(this);
-        this.handlePassengerSelect = this.handlePassengerSelect.bind(this);
-      }
-   
-    componentDidMount(){
-      this.handleListRefresh();
+export const HomeView = (props:any) => {
+    const passengerId = useSelector((state:RootState) => state.ui.selectedPassenger);
+    const addPassengerFormVisible = useSelector((state:RootState) => state.ui.addPassengerFormVisible);
+    if(passengerId === undefined){
+        if(!addPassengerFormVisible){
+            var containerDivClassName = "container-fluid";
+            var listDivClassName = "container-fluid";
+            var formDivClassName = "";
+        }
+        else {
+            var containerDivClassName = "row justify-content-md-center";
+            var listDivClassName = "col-md-auto";
+            var formDivClassName = "col p-3 font-weight-normal";            
+        }
+    } 
+    else {
+        var containerDivClassName = "row justify-content-md-center";
+        var listDivClassName = "col-md-auto";
+        var formDivClassName = "col p-3 font-weight-normal";
     }
-  
-    handleListRefresh(){
-      APIService.getPassengers()
-      .then((response) => {
-        this.setState({
-          allPassengers: response.data
-        });
-      })
-      .catch((err: Error) => {
-        console.log(err);
-      })
-    }
-
-    handlePassengerSelect (pId: number){
-        return 
-    }
-
-    render(){
       return (
-          <div className="App container">
-            <h2 className="display-1 p-3">Passengers</h2>
-            <PassengerList 
-              passengers={this.state.allPassengers} 
-              refreshHandler={this.handleListRefresh} 
-              />
-          </div>
+          <div className="container" >
+              <div className = {containerDivClassName}>
+                  <div className="Jumbotron text-center"><h1  className="display-2">Passengers</h1></div>
+                <div className={listDivClassName}>
+                    <PassengerList />
+                </div>
+                <div className={formDivClassName}>
+                    <PassengerAddForm />
+                </div>
+
+            </div>
+        </div>
       );      
-    }
   }
-
-
-
-
 
 export default HomeView;

@@ -1,52 +1,30 @@
-import React, { Component } from "react";
-  import PassengerSearchBar from "./passengersearchbar";
-  import PassengerTable from "./passengertable";
-  import Passenger from "../../models/passenger";
-  
+import React from "react";
+import PassengerSearchBar from "./passengersearchbar";
+import PassengerTable from "./passengertable";
+
 type PassengerListProps = {
-    passengers: Passenger[];
-    refreshHandler: (() => void);
 }
 
 type PassengerListState = {
-    filterText: string;
-
+  selectedPassenger: number|undefined;
 }
 
-  class PassengerList extends Component<PassengerListProps, PassengerListState> {
-    constructor(props: PassengerListProps) {
-      super(props);
-      this.state = {
-        filterText: ''
-      };
-      
-      this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-    }
-  
-    handleFilterTextChange(filterText: any) {
-      this.setState({
-        filterText: filterText
-      });
-    }
-
-  
-    render() {
-      return (
-          <div className="container-fluid">
-            <PassengerSearchBar
-            filterText={this.state.filterText}
-            onFilterTextChange={this.handleFilterTextChange}
-          />
-          <PassengerTable
-            passengers={this.props.passengers}
-            filterText={this.state.filterText}
-            refreshHandler={this.props.refreshHandler}
-          />
-
-          </div>
-      );
+class PassengerList extends React.Component <any, PassengerListState>{
+  constructor(props:PassengerListProps){
+    super(props);
+    this.state = {
+      selectedPassenger : undefined
     }
   }
+  render() {
+    return (
+          <div className="container-fluid">
+          <PassengerSearchBar />
+          <PassengerTable />
+          </div>
+    );
+  }
+}
 
 
-  export default PassengerList;
+export default PassengerList;

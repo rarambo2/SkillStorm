@@ -14,22 +14,18 @@ type AppState = {
 class App extends React.Component<AppProps, AppState> {
   render(){
     return (
-      <div>
-      <BrowserRouter>
-      <NavBar />
-      <Routes>
-          <Route path="/" element={ <HomeView /> } />
-          <Route path="/flight" element={ <FlightView /> } />
-
-        </Routes>
-      </BrowserRouter>
-
-      <main role="main" className="container">
-
-      </main>
-
-      </div>
-
+      <>
+          <BrowserRouter>
+            <NavBar />
+            <Routes>
+              <Route path="/" element={<HomeView />} />
+              <Route path="/home" element={<HomeView />} />
+              <Route path="/flight" element={<FlightView />} />
+            </Routes>
+          </BrowserRouter>
+        <main role="main" className="container">
+        </main>
+      </>
     );      
   }
 }

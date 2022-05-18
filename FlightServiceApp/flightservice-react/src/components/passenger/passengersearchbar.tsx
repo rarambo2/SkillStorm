@@ -1,45 +1,48 @@
-import React, { ChangeEventHandler, PureComponent } from "react";
-
-type PassengerSearchBarProps = {
-    filterText: string;
-    onFilterTextChange: ChangeEventHandler<HTMLInputElement>;
-};
-
-type PassengerSearchBarState = {
-    filterText: string;
-};
+import { RootState } from "../../store";
+import { SearchPassenger, showAddPassengerForm } from "../../ducks/uiducks";
+import { useSelector, useDispatch } from 'react-redux';
 
 
-class PassengerSearchBar extends PureComponent<PassengerSearchBarProps, PassengerSearchBarState> {
-    constructor(props: PassengerSearchBarProps) {
-      super(props);
-      this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
-    }
-    state: PassengerSearchBarState = {
-        filterText: "",
-    };
-    
-    handleFilterTextChange(e: any) {
-        this.setState({
-            filterText: e.target.value
-        });
-        this.props.onFilterTextChange(e.target.value);
-    }
-    
- 
-    render() {
-      return (
-        <div className="container-fluid p-3">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="container-fluid"
-            value={this.state.filterText}
-            onChange={this.handleFilterTextChange}
-          />
-        </div>
-      );
-    }
+const useFilterText = () => {
+  const filterText = useSelector((state:RootState) =>
+    state.ui.filterText);
+  return filterText;
+}
+
+function PassengerSearchBar () {
+  const dispatch = useDispatch();
+  const formVisible = useSelector((state:RootState) =>
+    state.ui.addPassengerFormVisible);
+  if(formVisible){
+    var buttoncode = (<button disabled type="button" 
+    className="btn btn-secondary col">Add New Passenger</button>);
+  }
+  else
+  {
+    var buttoncode =  (<button onClick={(e:any)=>dispatch(showAddPassengerForm())}
+      className="btn btn-secondary col">
+        Add New Passenger
+        </button>);
   }
 
-export default PassengerSearchBar;
+
+  return (
+    <div className="container-fluid p-3 row">
+      <div className="col-7">
+      <input
+        type="text"
+        placeholder="Search..."
+        className="container-fluid"
+        value={useFilterText()}
+        onChange={(e:any) => dispatch(SearchPassenger(e.target.value))}
+      />
+      </div>
+      <div className="col-sm">
+            {buttoncode}
+        </div>
+    </div>
+  );
+}
+
+
+  export default PassengerSearchBar;
