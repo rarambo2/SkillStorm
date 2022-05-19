@@ -26,7 +26,7 @@ namespace FlightService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Airport>>> GetAirports()
         {
-            return await _context.Airports.ToListAsync();
+            return await _context.Airports.OrderBy((x) => x.AirportName).ToListAsync();
         }
 
         // GET: api/Airports/5

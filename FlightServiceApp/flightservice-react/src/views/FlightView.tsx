@@ -1,52 +1,44 @@
-import React from 'react';
-import APIService from '../services/APIService'
-import Passenger from "../models/passenger"
-import PassengerList from "../components/passenger/passengerlist";
+import FlightList from "../components/flight/flightlist";
+import FlightAddForm from "../components/flight/flightaddform"; 
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 
-type HomeViewProps = {
-};
 
-type HomeViewState = {
-    allPassengers: Passenger[];
-}
-
-class FlightView extends React.Component<HomeViewProps, HomeViewState> {
-    constructor(props:HomeViewProps){
-        super(props)
-        this.state = {allPassengers : []};
-        this.handleListRefresh = this.handleListRefresh.bind(this);
-      }
-   
-    componentDidMount(){
-      this.handleListRefresh();
+export const FlightView = (props:any) => {
+    const flightId = useSelector((state:RootState) => state.ui.selectedFlight);
+    const addFlightFormVisible = useSelector((state:RootState) => state.ui.addFlightFormVisible);
+    if(flightId === undefined){
+        if(!addFlightFormVisible){
+            var containerDivClassName = "container-fluid";
+            var listDivClassName = "container-fluid";
+            var formDivClassName = "";
+        }
+        else {
+            var containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+            var listDivClassName = "col-9";
+            var formDivClassName = "col-3 font-weight-normal";            
+        }
+    } 
+    else {
+        var containerDivClassName = "row no-gutters p-1";
+        var listDivClassName = "col-9";
+        var formDivClassName = "col-3 font-weight-normal";
     }
-  
-    handleListRefresh(){
-      console.log("handleListRefresh");
-      APIService.getPassengers()
-      .then((response) => {
-        this.setState({
-          allPassengers: response.data
-        });
-      })
-      .catch((err: Error) => {
-        console.log(err);
-      })
-    }
-    render(){
       return (
-          <div className="App container">
-            <h2>Flights</h2>
-            <PassengerList  />
-          </div>
-  
+          <div className="container-fluid" >
+              <div className = {containerDivClassName}>
+                  <div className="Jumbotron text-center"><h1  className="display-2">Flights</h1></div>
+                 <div className={listDivClassName}>
+                    <FlightList />
+                </div>
+                <div className={formDivClassName}>
+                    <FlightAddForm />
+                </div>
+
+            </div>
+        </div>
       );      
-    }
   }
-
-
-
-
 
 export default FlightView;

@@ -25,18 +25,18 @@ export const HomeView = (props:any) => {
             var formDivClassName = "";
         }
         else {
-            var containerDivClassName = "row justify-content-md-center";
-            var listDivClassName = "col-md-auto";
+            var containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+            var listDivClassName = "col-9";
             var formDivClassName = "col p-3 font-weight-normal";            
         }
     } 
     else {
-        var containerDivClassName = "row justify-content-md-center";
-        var listDivClassName = "col-md-auto";
-        var formDivClassName = "col p-3 font-weight-normal";
+        var containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+        var listDivClassName = "col-9";
+        var formDivClassName = "col-3 font-weight-normal";
     }
       return (
-          <div className="container" >
+          <div className="container-fluid" >
               <div className = {containerDivClassName}>
                   <div className="Jumbotron text-center"><h1  className="display-2">Passengers</h1></div>
                 <div className={listDivClassName}>

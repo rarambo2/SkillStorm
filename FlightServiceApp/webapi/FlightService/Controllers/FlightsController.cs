@@ -28,7 +28,9 @@ namespace FlightService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
         {
-            return await _context.Flights.ToListAsync();
+            return await _context.Flights
+                .Include(f => f.ArrivalAirport)
+                .Include(f => f.DepartureAirport).ToListAsync();
         }
 
         // GET: api/Flights/5

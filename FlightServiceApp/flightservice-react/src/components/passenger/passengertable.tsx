@@ -14,14 +14,8 @@ function PassengerTable () {
   const passengers = useSelector((state:RootState) => state.passengers);
   const filterText = useSelector((state:RootState) => state.ui.filterText);
   const selectedPassenger = useSelector((state:RootState) => state.ui.selectedPassenger);
-  useEffect(() => {getPassengers(dispatch)}, [])
-  // useEffect(() =>{
-  //   const getAction = async () => {
-  //     const data = await getPassengers(dispatch).catch((err: Error) => {
-  //       console.log(err);
-  //     });
-  //   }
-  // }, []);
+  //useEffect(() => {getPassengers(dispatch)}, [])
+
   let fText:string = filterText.toString().toLowerCase();
   let filteredlist:Passenger[] = passengers
     .filter((p:Passenger) => {

@@ -3,11 +3,9 @@ import Passenger from "../../models/passenger";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { unselectPassenger } from "../../ducks/uiducks";
-import passengerReducer, { updatePassenger, addPassenger } from "../../ducks/passengerducks";
+import { updatePassenger, addPassenger } from "../../ducks/passengerducks";
 
-type FormData = {
-    name: string;
-  };
+
 export const PassengerAddForm = (props:any)=>{
 
     const dispatch = useDispatch();
@@ -26,10 +24,9 @@ export const PassengerAddForm = (props:any)=>{
     } else {   
         if(addNewPassenger){
             if(Init){
-                console.log("New Passenger Resetting state values")
                 // adding a new passenger form, clear all fields.
                 const newPassenger:Passenger = {
-                    Id : 0,
+                    Id : -1,
                     FirstName : "",
                     LastName : "",
                     Age : -1,

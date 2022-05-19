@@ -2,6 +2,7 @@ import { configureStore, } from '@reduxjs/toolkit';
 import passengerReducer from "./ducks/passengerducks";
 import flightReducer from "./ducks/flightducks";
 import uiReducer from "./ducks/uiducks";
+import airportReducer from "./ducks/airportducks";
 //import rootReducer from './ducks'
 
 
@@ -10,7 +11,8 @@ export const store = configureStore({
       //rootReducer: rootReducer,
       passengers: passengerReducer,
       flights: flightReducer,
-      ui : uiReducer
+      ui : uiReducer,
+      airports : airportReducer
    },
 })
 

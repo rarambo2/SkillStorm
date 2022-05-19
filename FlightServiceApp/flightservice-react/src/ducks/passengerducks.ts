@@ -12,7 +12,7 @@ export const GET_PASSENGER: string = 'GET_PASSENGER'
 
 
 // Actions
-export const getPassengers = async (dispatch:AppDispatch) => {
+export const getPassengers = () => async (dispatch:AppDispatch) => {
     try {
         console.log("getPassengers()");
         const res = await PassengerDataService.getAll();

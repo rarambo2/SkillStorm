@@ -12,10 +12,13 @@ type PassengerListState = {
 class PassengerList extends React.Component <any, PassengerListState>{
   constructor(props:PassengerListProps){
     super(props);
+
     this.state = {
       selectedPassenger : undefined
     }
   }
+
+  
   render() {
     return (
           <div className="container-fluid">

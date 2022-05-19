@@ -4,14 +4,18 @@ import './App.css';
 import HomeView from './views/HomeView';
 import FlightView from './views/FlightView';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {connect} from "react-redux";
+import {getPassengers} from "./ducks/passengerducks";
+import {getFlights} from "./ducks/flightducks";
+import {getAirports} from "./ducks/airportducks";
+import {AppDispatch} from "./store";
 
-type AppProps = {
-};
+
 
 type AppState = {
 }
 
-class App extends React.Component<AppProps, AppState> {
+class App extends React.Component<any, AppState> {
   render(){
     return (
       <>
@@ -28,8 +32,22 @@ class App extends React.Component<AppProps, AppState> {
       </>
     );      
   }
+  componentDidMount(){
+    // load API Data
+    this.props.getPassengers();
+    this.props.getFlights();
+    this.props.getAirports();
+
+  }
 }
 
 
+const mapDispatchToProps = (dispatch:AppDispatch) => {
+  return {
+    getPassengers: () => dispatch(getPassengers()),
+    getFlights: () => dispatch(getFlights()),
+    getAirports: () => dispatch(getAirports())
+  }
+}
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);

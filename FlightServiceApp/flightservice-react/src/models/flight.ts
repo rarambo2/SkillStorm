@@ -1,4 +1,6 @@
-interface Flight {
+import xAirport from "./airport";
+
+export interface xFlight {
     Id: number;
     FlightNumber: number;
     DepartureDate: Date;
@@ -8,4 +10,9 @@ interface Flight {
     PassengerLimit: number;
 }
 
+interface Flight extends xFlight{
+    ArrivalAirport: xAirport;
+    DepartureAirport: xAirport;
+}
 export default Flight;
+
