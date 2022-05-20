@@ -24,7 +24,7 @@ class NavBar extends Component<NavBarProps, NavBarState> {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                 <LinkContainer to="/">
-                <a className="nav-link" aria-current="page" href="/">Home</a>
+                <a className="nav-link" aria-current="page" href="/">Passengers</a>
                 </LinkContainer>
                 </li>
                 <li className="nav-item">

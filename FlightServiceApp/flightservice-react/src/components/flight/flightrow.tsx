@@ -10,7 +10,7 @@ export const FlightRow = (props:any) => {
     let pId = `${flight.Id}`;
     let highlightFormattingTags = "";
     if(props.selected){
-      highlightFormattingTags = "text-light bg-info";
+      highlightFormattingTags = "text-dark bg-white";
     }
     const departureairport = `(${flight.DepartureAirport.IATACode})${flight.DepartureAirport.AirportName}`;
     const arrivalairport = `(${flight.ArrivalAirport.IATACode})${flight.ArrivalAirport.AirportName}`; 
@@ -51,7 +51,14 @@ const handleSelectFlight = (dispatch:AppDispatch, flightId: number, e:any) => {
   dispatch(selectFlight(flightId));
 }
 const handleDeleteFlight = (dispatch:AppDispatch, flightId: number, e:any) => {
-  dispatch(deleteFlight(flightId));
+  let dialogText:string = "This will delete the flight.  Continue?";
+  //stop bubbling
+  e.stopPropagation();
+  if(window.confirm(dialogText))
+  {
+    dispatch(deleteFlight(flightId));
+  }
+  
 }
 
 export default FlightRow;

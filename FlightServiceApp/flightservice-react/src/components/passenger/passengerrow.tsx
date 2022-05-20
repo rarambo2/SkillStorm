@@ -10,7 +10,7 @@ export const PassengerRow = (props:any) => {
     let pId = `${passenger.Id}`;
     let highlightFormattingTags = "";
     if(props.selected){
-      highlightFormattingTags = "text-light bg-info";
+      highlightFormattingTags = "text-dark bg-white";
     }
     return (
       <React.Fragment key={passenger.Id} >
@@ -33,7 +33,13 @@ const handleSelectPassenger = (dispatch:AppDispatch, passId: number, e:any) => {
   dispatch(selectPassenger(passId));
 }
 const handleDeletePassenger = (dispatch:AppDispatch, passId: number, e:any) => {
-  dispatch(deletePassenger(passId));
+  // prevent bubbling
+  e.stopPropagation();
+  let dialogText:string = "This will delete the passenger.  Continue?";
+  if(window.confirm(dialogText))
+  {
+    dispatch(deletePassenger(passId));
+  }
 }
 
 export default PassengerRow;

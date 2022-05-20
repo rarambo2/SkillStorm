@@ -2,8 +2,6 @@ import Passenger from "../models/passenger"
 import PassengerDataService from "../services/passengerService";
 import { AppDispatch } from "../store";
 import { AnyAction } from "@reduxjs/toolkit";
-import { RootState } from "../store"
-import Booking from "../models/booking";
 
 // This is not specifically for bookings but for API calls that reference 
 // the booking, flight and passenger tables for the UI

@@ -19,15 +19,14 @@ export const FlightView = (props:any) => {
             formDivClassName = "";
         }
         else {
-            containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+            containerDivClassName = "row justify-content-xl-left no-gutters p";
             listDivClassName = "col-9";
             formDivClassName = "col-3 font-weight-normal";            
         }
     } 
       return (
-          <div className="container-fluid" >
+          <div className="container-fluid bg-info" >
               <div className = {containerDivClassName}>
-                  <div className="Jumbotron text-center"><h1  className="display-2">Flights</h1></div>
                  <div className={listDivClassName}>
                     <FlightList />
                 </div>

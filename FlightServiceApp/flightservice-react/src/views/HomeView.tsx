@@ -7,7 +7,7 @@ import { RootState } from "../store";
 export const HomeView = (props:any) => {
     const passengerId = useSelector((state:RootState) => state.ui.selectedPassenger);
     const addPassengerFormVisible = useSelector((state:RootState) => state.ui.addPassengerFormVisible);
-    var containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+    var containerDivClassName = "row justify-content-xl-left no-gutters ";
     var listDivClassName = "col-9";
     var formDivClassName = "col-3 font-weight-normal";
     if(passengerId === undefined){
@@ -17,15 +17,15 @@ export const HomeView = (props:any) => {
             formDivClassName = "";
         }
         else {
-            containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+            containerDivClassName = "row justify-content-xl-left no-gutters ";
             listDivClassName = "col-9";
-            formDivClassName = "col p-3 font-weight-normal";            
+            formDivClassName = "col font-weight-normal";            
         }
     } 
       return (
-          <div className="container-fluid" >
+          <div className="container-fluid bg-info" >
               <div className = {containerDivClassName}>
-                  <div className="Jumbotron text-center"><h1  className="display-2">Passengers</h1></div>
+                  
                 <div className={listDivClassName}>
                     <PassengerList />
                 </div>

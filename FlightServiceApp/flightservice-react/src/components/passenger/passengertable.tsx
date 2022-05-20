@@ -21,7 +21,7 @@ function PassengerTable () {
         else{return false;}
     })
   return (
-    <table className="table table-hover table-bordered">
+    <table className="table table-hover table-bordered border-dark bg-white bg-opacity-75">
       <thead>
         <PassengerTableColumns />
       </thead>

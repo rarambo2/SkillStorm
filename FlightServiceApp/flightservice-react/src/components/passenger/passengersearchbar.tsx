@@ -16,24 +16,25 @@ function PassengerSearchBar () {
   let buttoncode = (<></>);  
   if(formVisible){
     buttoncode = (<button disabled type="button" 
-    className="btn btn-primary col">Add New Passenger</button>);
+    className="btn btn-primary col border-dark">Add New Passenger</button>);
   }
   else
   {
     buttoncode =  (<button onClick={(e:any)=>dispatch(showAddPassengerForm())}
-      className="btn btn-primary col">
+      className="btn btn-primary col border-dark">
         Add New Passenger
         </button>);
   }
 
 
   return (
-    <div className="container-fluid p-3 row">
+    <div className="container-fluid p-2 row">
+      <div className="col Jumbotron text-center "><h3 >Passengers</h3></div>
       <div className="col-7">
       <input
         type="text"
         placeholder="Search..."
-        className="container-fluid"
+        className="container-fluid border-dark"
         value={useFilterText()}
         onChange={(e:any) => dispatch(SearchPassenger(e.target.value))}
       />

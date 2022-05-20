@@ -23,7 +23,7 @@ function FlightTable () {
         else{return false;}
     })
   return (
-    <table className="table table-hover table-bordered table-responsive-xl">
+    <table className="table table-hover table-bordered border-dark table-responsive-xl bg-white bg-opacity-75">
       <thead>
         <FlightTableColumns />
       </thead>

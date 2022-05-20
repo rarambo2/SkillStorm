@@ -36,7 +36,7 @@ export const FlightAddForm = (props:any)=>{
         setPassengerLimit("");
 
     }
-    else if(!addNewFlight && flight != undefined &&  FlightId !== fid)
+    else if(!addNewFlight && flight !== undefined &&  FlightId !== fid)
     {
         setFlightId(flight.Id);
         setFlightNumber(flight.FlightNumber);
@@ -48,7 +48,7 @@ export const FlightAddForm = (props:any)=>{
     }
     var buttonText = <></>;
     if(!addNewFlight) {
-        buttonText = <button type="button" className="btn btn-primary m-2" onClick={(e:any) => togglePassengerList(dispatch, PassengerListVisible, e)}>{ButtonText}</button>
+        buttonText = <button type="button" className="btn btn-primary m-2 border-dark" onClick={(e:any) => togglePassengerList(dispatch, PassengerListVisible, e)}>{ButtonText}</button>
     }  
     if(fid === undefined && !addNewFlight){
         return (<></>);
@@ -56,21 +56,21 @@ export const FlightAddForm = (props:any)=>{
         
     } else {   
  
-        let formStyleString = PassengerListVisible? "bg-info p-3" : "bg-info p-3  sticky-top"
+        let formStyleString = PassengerListVisible? "bg-info p-2" : "bg-info p-2  sticky-top"
         return(
             <form className={formStyleString} onSubmit={(e:any) => {handleSubmit({
                 Id : FlightId,
-                FlightNumber : FlightNumber==""?-1:FlightNumber,
-                DepartureAirportId : DepartureAirportId==""? -1: DepartureAirportId,
-                DepartureDate : DepartureDate==""?new Date():DepartureDate,
-                ArrivalAirportId : ArrivalAirportId==""?-1:ArrivalAirportId,
-                ArrivalDate : ArrivalDate==""?new Date():ArrivalDate,
-                PassengerLimit: PassengerLimit==""?-1:PassengerLimit,    
+                FlightNumber : FlightNumber===""?-1:FlightNumber,
+                DepartureAirportId : DepartureAirportId===""? -1: DepartureAirportId,
+                DepartureDate : DepartureDate===""?new Date():DepartureDate,
+                ArrivalAirportId : ArrivalAirportId===""?-1:ArrivalAirportId,
+                ArrivalDate : ArrivalDate===""?new Date():ArrivalDate,
+                PassengerLimit: PassengerLimit===""?-1:PassengerLimit,    
             }, dispatch, addNewFlight, airports, e)}}>
             <h3> {addNewFlight?"New Flight":"Edit Flight"}</h3>
             <div className ="form-group">
                 <label htmlFor="flightNumberField">Flight Number</label>
-                <input required className="form-control" id="flightNumberField" value={FlightNumber} placeholder={FlightNumber} onChange = {
+                <input required className="form-control border-dark" id="flightNumberField" value={FlightNumber} placeholder={FlightNumber} onChange = {
                     (e:any) => setFlightNumber(e.target.value)}/>
             </div>   
             <div className ="form-group">
@@ -91,11 +91,11 @@ export const FlightAddForm = (props:any)=>{
             </div>
             <div className="form-group">
                 <label htmlFor="flightPassengerLimitField">PassengerLimit</label>
-                <input required className="form-control" id="flightPassengerLimitField" value={PassengerLimit} placeholder={PassengerLimit} onChange = {
+                <input required className="form-control border border-dark" id="flightPassengerLimitField" value={PassengerLimit} placeholder={PassengerLimit} onChange = {
                     (e:any) => setPassengerLimit(e.target.value)}/>
             </div>
-             <button type="reset" className="btn btn-primary m-2" onClick={(e:any) => handleCancel(dispatch,e)}>Cancel</button>
-            <button type="submit" className="btn btn-primary m-2">Save</button>
+             <button type="reset" className="btn btn-primary m-2 border-dark" onClick={(e:any) => handleCancel(dispatch,e)}>Cancel</button>
+            <button type="submit" className="btn btn-primary m-2 border-dark">Save</button>
             {buttonText}
             </form>
         );

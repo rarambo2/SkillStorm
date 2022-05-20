@@ -1,5 +1,4 @@
 import DatePicker from "react-datepicker";
-import { useState} from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 type DateTimePickerProps = {
@@ -11,7 +10,7 @@ type DateTimePickerProps = {
 const DateTimePicker = (props: DateTimePickerProps) => {
     let dateval:Date = new Date(props.selected);
     return (<>
-             <DatePicker showTimeSelect
+             <DatePicker className = "border-dark" showTimeSelect
               selected={new Date(props.selected)}
               onChange={(date) => props.handler(date as Date)}
               dateFormat="Pp"

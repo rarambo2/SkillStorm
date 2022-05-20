@@ -16,24 +16,25 @@ function FlightSearchBar () {
   let buttoncode = (<></>);
   if(formVisible){
     buttoncode = (<button disabled type="button" 
-    className="btn btn-primary col">Add New Flight</button>);
+    className="btn btn-primary col border-dark">Add New Flight</button>);
   }
   else
   {
     buttoncode =  (<button onClick={(e:any)=>dispatch(showAddFlightForm())}
-      className="btn btn-primary col">
+      className="btn btn-primary col border-dark">
         Add New Flight
         </button>);
   }
 
 
   return (
-    <div className="container-fluid p-3 row">
+    <div className="container-fluid p-2 row">
+      <div className="col Jumbotron text-center "><h3 >Flights</h3></div>
       <div className="col-7">
       <input
         type="text"
         placeholder="Search..."
-        className="container-fluid"
+        className="container-fluid border-dark"
         value={useFlightFilterText()}
         onChange={(e:any) => dispatch(SearchFlight(e.target.value))}
       />

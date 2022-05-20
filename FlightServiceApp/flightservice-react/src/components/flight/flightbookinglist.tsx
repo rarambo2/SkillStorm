@@ -25,22 +25,22 @@ const FlightBookingList = (props: FlightBookingListProps): JSX.Element => {
     const passengers = useSelector((state:RootState) => state.passengers);
     const dispatch = useDispatch();
     const myFlight = selectedFlight as number;
-    useEffect(() => loadPassengerData(dispatch, selectedFlight), [selectedFlight]);
+    useEffect(() => loadPassengerData(dispatch, selectedFlight), [selectedFlight, dispatch]);
    const flightManifests = useSelector((state:RootState) => state.bookings.PassengerManifestsByFlightId);
 
    if(!showPassengerList || selectedFlight === undefined)return (<></>);
     const flightManifest : Passenger[] = flightManifests[myFlight];
     let currentFlight:Flight = flights.reduce((f:Flight, b:any)=>{
-        if(f.Id == selectedFlight)return f;
+        if(f.Id === selectedFlight)return f;
         else return b;
     }) 
     var passengerlist:JSX.Element[] = [];
     var numberOfPassengers:number = 0;
     let mapOfBookings = new Map();
+    let i:number = 0;
     if(flightManifest !== undefined){
         numberOfPassengers = flightManifest.length;
         passengerlist = flightManifest.map((p : Passenger)=>{
-            let i:number = 0;
             if(!mapOfBookings.has(p.Id)){
                 mapOfBookings.set(p.Id, 1);
             }
@@ -50,7 +50,7 @@ const FlightBookingList = (props: FlightBookingListProps): JSX.Element => {
             }
             return(
         <React.Fragment key={p.Id}>
-            <tr key={'${p.Id}${i++}'}><td>{`${currentFlight.FlightNumber}-${p.Id}${selectedFlight}-${mapOfBookings.get(p.Id)}`}</td>
+            <tr key={`${p.Id}${i++}`}><td>{`${currentFlight.FlightNumber}-${p.Id}${selectedFlight}-${mapOfBookings.get(p.Id)}`}</td>
             <td >{`${p.LastName}, ${p.FirstName}`}</td>
             </tr>
         </React.Fragment>)})
@@ -63,14 +63,15 @@ const FlightBookingList = (props: FlightBookingListProps): JSX.Element => {
     }
     var buttonText = <></>;
     if(currentFlight.PassengerLimit - numberOfPassengers > 0){
-        buttonText = <button type="submit" className="btn btn-primary m-2">Add</button>
+        buttonText = <button type="submit" className="btn btn-primary m-2 border-dark">Add</button>
     }else{
-        buttonText = <><button type="submit" className="btn btn-primary m-2" disabled>Add</button>
+        buttonText = <><button type="submit" className="btn btn-primary m-2 border-dark" disabled>Add</button>
         <small className="text-danger">This flight is full!</small></>
     }
     const firstId = passengers.length > 0?passengers[0].Id:0;
     return (
-        <div className="container-fluid border-info border sticky-top bg-info bg-opacity-25">
+        <div className="container-fluid border-info border border-dark rounded-end sticky-top bg-white bg-opacity-50">
+        <div className="bg-white  mt-3 border border-dark p-2">
         <h5 className = "mt-3 mb-3">{`Passengers on Flight: ${currentFlight.FlightNumber}-${selectedFlight}`}</h5>
         <div>
             <h6 ><small className="text-muted"></small>{currentFlight.PassengerLimit - numberOfPassengers} Seats Remaining<small></small></h6>
@@ -84,12 +85,11 @@ const FlightBookingList = (props: FlightBookingListProps): JSX.Element => {
                         { passengerlist }
                 </tbody>
             </table>
-
-
+        </div>
         </div>
         <h4 className = "mt-3 mb-3">Add Passengers</h4>
             <form className="p-3" onSubmit={(e:any) => handleAddPassenger(selectedFlight, selectedPassenger, dispatch, e)}>
-            <Form.Select required className="custom-select" onChange={(e:any) => setSelectedPassenger(parseInt(e.target.value))}
+            <Form.Select required className="custom-select border border-dark" onChange={(e:any) => setSelectedPassenger(parseInt(e.target.value))}
                 defaultValue={selectedPassenger === undefined? firstId : selectedPassenger}>
                 {selectlist}
             </Form.Select>
