@@ -8,7 +8,6 @@ export const FlightRow = (props:any) => {
     const flight = props.flight;
     const dispatch = useDispatch();
     let pId = `${flight.Id}`;
-    let idRow : number  = flight.Id;
     let highlightFormattingTags = "";
     if(props.selected){
       highlightFormattingTags = "text-light bg-info";

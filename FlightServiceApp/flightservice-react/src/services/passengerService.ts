@@ -20,15 +20,14 @@ class PassengerDataService {
         return http.post("/Passengers", newPass);
     }
     update(passenger : Passenger) {
-        console.log(`/Passengers/${passenger.Id}`);
-        console.log(passenger);
         return http.put(`/Passengers/${passenger.Id}`, passenger);
     }
     delete(id : number) {
-        console.log(`PassengerDataService.delete ${id}`);
         return http.delete(`/Passengers/${id}`);
     }
-
+    getPassengersForFlight(id : number) {
+        return http.get(`/Passengers/${id}/booked`)
+    }
 }
 
 

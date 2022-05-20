@@ -11,7 +11,7 @@ export const PassengerAddForm = (props:any)=>{
     const dispatch = useDispatch();
     const addNewPassenger = useSelector((state:RootState) => state.ui.addPassengerFormVisible);
     const passengerid = useSelector((state:RootState) => state.ui.selectedPassenger);
-    const passenger = useSelector((state:RootState) => (state.passengers.filter((p:Passenger) => p.Id == passengerid)).pop()) ?? undefined;
+    const passenger = useSelector((state:RootState) => (state.passengers.filter((p:Passenger) => p.Id === passengerid)).pop()) ?? undefined;
     const [passFName, setPassFName] = useState(passenger === undefined? "" : passenger.FirstName);
     const [passLName, setPassLName] = useState(passenger === undefined? "" : passenger.LastName);
     const [passAge, setPassAge] = useState(passenger === undefined? "" : passenger.Age);
@@ -24,15 +24,6 @@ export const PassengerAddForm = (props:any)=>{
     } else {   
         if(addNewPassenger){
             if(Init){
-                // adding a new passenger form, clear all fields.
-                const newPassenger:Passenger = {
-                    Id : -1,
-                    FirstName : "",
-                    LastName : "",
-                    Age : -1,
-                    Email : "",
-                    Job : ""
-                }
                 setPassId(-1);
                 setPassFName("");
                 setPassLName("");
@@ -71,7 +62,7 @@ export const PassengerAddForm = (props:any)=>{
                 </div>
                 <div className ="form-group">
                     <label htmlFor="passengerAgeField">Age</label>
-                    <input required className="form-control" id="passengerAgeField" value={(passAge == -1)?"" : passAge}  type="number" onChange={
+                    <input required className="form-control" id="passengerAgeField" value={(passAge === -1)?"" : passAge}  type="number" onChange={
                         (e:any) => setPassAge(e.target.value)}/>
                 <div className="invalid-feedback">
                         Please enter an age.
@@ -90,6 +81,7 @@ export const PassengerAddForm = (props:any)=>{
                 </div>            
                 <button type="reset" className="btn btn-primary m-2" onClick={(e:any) => handleCancel(dispatch,e)}>Cancel</button>
                 <button type="submit" className="btn btn-primary m-2">Save</button>
+
                 </form>
             );
                 

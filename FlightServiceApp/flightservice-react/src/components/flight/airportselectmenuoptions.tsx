@@ -1,4 +1,3 @@
-import React from "react";
 import { xAirport } from "../../models/airport";
 
 type AirportSelectMenuOptionsProps = {

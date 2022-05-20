@@ -11,12 +11,9 @@ class AirportDataService {
     // create(airport : Airport) { //// NOT IMPLEMENTED RIGHT NOW
     // }
     update(airport : Airport) {
-        console.log(`/Airports/${airport.Id}`);
-        console.log(airport);
         return http.put(`/Airports/${airport.Id}`, airport);
     }
     delete(id : number) {
-        console.log(`AirportDataService.delete ${id}`);
         return http.delete(`/Airports/${id}`);
     }
 

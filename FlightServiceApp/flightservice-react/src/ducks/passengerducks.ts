@@ -1,7 +1,7 @@
 import Passenger from "../models/passenger"
 import PassengerDataService from "../services/passengerService";
 import { AppDispatch } from "../store";
-import { AnyAction, bindActionCreators } from "@reduxjs/toolkit";
+import { AnyAction } from "@reduxjs/toolkit";
 
 // Constants
 export const CREATE_PASSENGER: string = 'CREATE_PASSENGER'

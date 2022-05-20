@@ -18,11 +18,16 @@ const getPassenger = (id: number) => {
 }
 
 const createPassenger = (passenger: Passenger) => {
-    return http.post<Passenger>("api/Passengers", passenger);
+    console.log("createPassenger");
+    let returnval = http.post<Passenger>("api/Passengers", passenger);
+    console.log(returnval);
+    return returnval;
 };
 
 const updatePassenger = (passenger: Passenger) => {
-    return http.put<Passenger>(`api/Passengers/${passenger.Id}`, passenger);
+    console.log("createPassenger");
+    let returnval = http.put<Passenger>(`api/Passengers/${passenger.Id}`, passenger);
+    return returnval;
 };
 
 const deletePassenger = (id: number) => {

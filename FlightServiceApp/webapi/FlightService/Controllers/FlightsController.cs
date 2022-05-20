@@ -69,14 +69,14 @@ namespace FlightService.Controllers
         // PUT: api/Flights/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFlight(int id, Flight flight)
+        public async Task<IActionResult> PutFlight(int id, DTOFlight flight)
         {
             if (id != flight.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(flight).State = EntityState.Modified;
+            Flight newflight = new (flight);
+            _context.Entry(newflight).State = EntityState.Modified;
 
             try
             {
@@ -100,24 +100,28 @@ namespace FlightService.Controllers
         // POST: api/Flights
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Flight>> PostFlight(Flight flight)
+        public async Task<ActionResult<Flight>> PostFlight(DTOFlight flight)
         {
-            _context.Flights.Add(flight);
+            
+            Flight newFlight = new (flight);
+            _context.Flights.Add(newFlight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFlight", new { id = flight.Id }, flight);
+            return CreatedAtAction("GetFlight", new { id = newFlight.Id }, newFlight);
         }
 
         // DELETE: api/Flights/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFlight(int id)
         {
-            var flight = await _context.Flights.FindAsync(id);
+            
+            var flight = await _context.Flights.Include(x => x.Bookings).SingleAsync(x => x.Id == id);
+
             if (flight == null)
             {
                 return NotFound();
             }
-
+            _context.Bookings.RemoveRange(flight.Bookings);
             _context.Flights.Remove(flight);
             await _context.SaveChangesAsync();
 

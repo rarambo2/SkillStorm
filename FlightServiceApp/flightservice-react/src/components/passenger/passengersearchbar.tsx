@@ -13,13 +13,14 @@ function PassengerSearchBar () {
   const dispatch = useDispatch();
   const formVisible = useSelector((state:RootState) =>
     state.ui.addPassengerFormVisible);
+  let buttoncode = (<></>);  
   if(formVisible){
-    var buttoncode = (<button disabled type="button" 
+    buttoncode = (<button disabled type="button" 
     className="btn btn-secondary col">Add New Passenger</button>);
   }
   else
   {
-    var buttoncode =  (<button onClick={(e:any)=>dispatch(showAddPassengerForm())}
+    buttoncode =  (<button onClick={(e:any)=>dispatch(showAddPassengerForm())}
       className="btn btn-secondary col">
         Add New Passenger
         </button>);

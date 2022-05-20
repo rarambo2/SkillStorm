@@ -13,13 +13,14 @@ function FlightSearchBar () {
   const dispatch = useDispatch();
   const formVisible = useSelector((state:RootState) =>
     state.ui.addFlightFormVisible);
+  let buttoncode = (<></>);
   if(formVisible){
-    var buttoncode = (<button disabled type="button" 
+    buttoncode = (<button disabled type="button" 
     className="btn btn-secondary col">Add New Flight</button>);
   }
   else
   {
-    var buttoncode =  (<button onClick={(e:any)=>dispatch(showAddFlightForm())}
+    buttoncode =  (<button onClick={(e:any)=>dispatch(showAddFlightForm())}
       className="btn btn-secondary col">
         Add New Flight
         </button>);

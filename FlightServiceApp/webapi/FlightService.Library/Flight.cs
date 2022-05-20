@@ -9,7 +9,16 @@ namespace FlightService.Library
         {
             Bookings = new HashSet<Booking>();
         }
-
+        public Flight(DTOFlight dbFlight)
+        {
+            Id = dbFlight.Id;
+            FlightNumber = dbFlight.FlightNumber;
+            DepartureDate = dbFlight.DepartureDate;
+            ArrivalDate = dbFlight.ArrivalDate;
+            DepartureAirportId = dbFlight.DepartureAirportId;
+            ArrivalAirportId = dbFlight.ArrivalAirportId;
+            PassengerLimit = dbFlight.PassengerLimit;
+        }
         public int FlightNumber { get; set; }
         public DateTime? DepartureDate { get; set; }
         public DateTime? ArrivalDate { get; set; }

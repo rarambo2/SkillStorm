@@ -8,7 +8,6 @@ export const PassengerRow = (props:any) => {
     const passenger = props.passenger;
     const dispatch = useDispatch();
     let pId = `${passenger.Id}`;
-    let idRow : number  = passenger.Id;
     let highlightFormattingTags = "";
     if(props.selected){
       highlightFormattingTags = "text-light bg-info";

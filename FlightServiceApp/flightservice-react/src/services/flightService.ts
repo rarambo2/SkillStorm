@@ -9,21 +9,36 @@ class FlightDataService {
         return http.get(`/Flights/${id}`);
     }
     create(flight : xFlight) {
-        // omitted Id since database will assign one.
+        // omitted Id since  database will assign one.
+        console.log("Flight create");
         let newFlight = {
-            FlightNumber: flight.FlightNumber,
-            DepartureDate: flight.DepartureDate,
-            ArrivalDate: flight.ArrivalDate,
+            FlightNumber: parseInt(flight.FlightNumber.toString()).toString(),
+            DepartureDate: (new Date(flight.DepartureDate)).toJSON(),
+            ArrivalDate: (new Date(flight.ArrivalDate)).toJSON(),
             DepartureAirportId: flight.DepartureAirportId,
             ArrivalAirportId: flight.ArrivalAirportId,
-            PassengerLimit: flight.PassengerLimit       
+            PassengerLimit: parseInt(flight.PassengerLimit.toString()).toString()       
         }
-        return http.post("/Flights", newFlight);
+        console.log(newFlight);
+        let retval = http.post("/Flights", newFlight);
+        console.log(retval);
+        return retval;
     }
     update(flight : xFlight) {
-        console.log(`/Flights/${flight.Id}`);
-        console.log(flight);
-        return http.put(`/Flights/${flight.Id}`, flight);
+        let newFlight = {
+            Id: flight.Id,
+            FlightNumber: parseInt(flight.FlightNumber.toString()),
+            DepartureDate: (new Date(flight.DepartureDate)).toJSON(),
+            ArrivalDate: (new Date(flight.ArrivalDate)).toJSON(),
+            DepartureAirportId: flight.DepartureAirportId,
+            ArrivalAirportId: flight.ArrivalAirportId,
+            PassengerLimit: parseInt(flight.PassengerLimit.toString()) 
+        } 
+        console.log("flight update()")
+        console.log(newFlight);
+        let retval = http.put(`/Flights/${flight.Id}`, newFlight);
+        console.log(retval);
+        return http.put(`/Flights/${flight.Id}`, newFlight);
     }
     delete(id : number) {
         console.log(`FlightDataService.delete ${id}`);

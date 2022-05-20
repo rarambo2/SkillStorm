@@ -3,6 +3,7 @@ import passengerReducer from "./ducks/passengerducks";
 import flightReducer from "./ducks/flightducks";
 import uiReducer from "./ducks/uiducks";
 import airportReducer from "./ducks/airportducks";
+import bookingReducer from "./ducks/bookingducks";
 //import rootReducer from './ducks'
 
 
@@ -12,7 +13,8 @@ export const store = configureStore({
       passengers: passengerReducer,
       flights: flightReducer,
       ui : uiReducer,
-      airports : airportReducer
+      airports : airportReducer,
+      bookings: bookingReducer
    },
 })
 

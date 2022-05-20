@@ -42,17 +42,15 @@ namespace FlightService.Controllers
 
             return passenger;
         }
-        // GET: api/Passengers/5/Bookings
-        [HttpGet("{id}/Bookings/")]
-        public async Task<ActionResult<Passenger>> GetPassengerWithBookings(int id)
+        // GET: api/Passengers/Booked
+        [HttpGet("{id}/Booked/")]
+        public async Task<ActionResult<IEnumerable<Passenger>>> GetPassengerWithBookings(int id)
         {
-            Passenger passenger = await _context.Passengers
-                .Include(x => x.Bookings).FirstAsync(x => x.Id == id);
-            if(passenger == null)
-            {
-                return NotFound();
-            }
-            return passenger;
+            // we are actually getting passed a flight id, not a passenger or booking id.
+
+            return await _context.Bookings.Where(x => x.FlightId == id)
+                .Include(y => y.Passenger).Select(x => x.Passenger).ToListAsync();
+             
         }
 
         // PUT: api/Passengers/5

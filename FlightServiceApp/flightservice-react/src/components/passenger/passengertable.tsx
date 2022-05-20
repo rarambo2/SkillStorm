@@ -2,15 +2,9 @@ import PassengerRow from "./passengerrow";
 import Passenger from "../../models/passenger";
 import PassengerTableColumns from "./passengertablecolumns";
 import { RootState } from "../../store";
-import { useSelector, useDispatch } from 'react-redux';
-import { getPassengers } from "../../ducks/passengerducks";
-import { useEffect } from "react";
-import { AnyAction } from "@reduxjs/toolkit"
-
-
+import { useSelector } from 'react-redux';
 
 function PassengerTable () {
-  const dispatch = useDispatch();
   const passengers = useSelector((state:RootState) => state.passengers);
   const filterText = useSelector((state:RootState) => state.ui.filterText);
   const selectedPassenger = useSelector((state:RootState) => state.ui.selectedPassenger);
@@ -35,7 +29,7 @@ function PassengerTable () {
           {filteredlist.map( (passenger:Passenger) => (
             <PassengerRow 
               passenger={passenger} 
-              selected = {passenger.Id == selectedPassenger?true:false}
+              selected = {passenger.Id === selectedPassenger?true:false}
               key = {passenger.Id} 
               />
           ))}

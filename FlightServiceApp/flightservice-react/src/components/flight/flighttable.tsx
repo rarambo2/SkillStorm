@@ -2,22 +2,13 @@ import FlightRow from "./flightrow";
 import Flight from "../../models/flight";
 import FlightTableColumns from "./flighttablecolumns";
 import { RootState } from "../../store";
-import { useSelector, useDispatch } from 'react-redux';
-import { getFlights } from "../../ducks/flightducks";
-import { useEffect } from "react";
-//import { AnyAction } from "@reduxjs/toolkit"
-
+import { useSelector } from 'react-redux';
 
 
 function FlightTable () {
-  const dispatch = useDispatch();
   const flights = useSelector((state:RootState) => state.flights);
   const flightFilterText = useSelector((state:RootState) => state.ui.flightFilterText);
   const selectedFlight = useSelector((state:RootState) => state.ui.selectedFlight);
-  //useEffect(() => {getFlights(dispatch)}, [])
- 
-  console.log("FlightTable");
-  console.log(flightFilterText);
   let fText:string = flightFilterText.toString().toLowerCase();
   let filteredlist:Flight[] = flights
     .filter((p:Flight) => {
@@ -40,7 +31,7 @@ function FlightTable () {
           {filteredlist.map( (flight:Flight) => (
             <FlightRow 
               flight={flight} 
-              selected = {flight.Id == selectedFlight?true:false}
+              selected = {flight.Id === selectedFlight?true:false}
               key = {flight.Id} 
               />
           ))}

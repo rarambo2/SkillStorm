@@ -1,6 +1,7 @@
 import Flight, { xFlight } from "../models/flight"
 import FlightDataService from "../services/flightService";
 import { AppDispatch } from "../store";
+import Airport from "../models/airport";
 
 // Constants
 export const CREATE_FLIGHT: string = 'CREATE_FLIGHT'
@@ -11,12 +12,26 @@ const GET_FLIGHT : string = 'GET_FLIGHT'
 
 // Actions
 
-export const addFlight = (flight : xFlight) => async (dispatch:AppDispatch) => {
+const FindAirportFromId = (Identifier:number, airports:Airport[]) : Airport => {
+    let returnval:Airport = airports.reduce((a:Airport, b:any) => {
+        if(a.Id === Identifier)return a;
+        return b;
+    });
+    return returnval;
+}
+
+export const addFlight = (flight : xFlight, airports:Airport[]) => async (dispatch:AppDispatch) => {
     try {
+        console.log("addFlight()");
         const res = await FlightDataService.create(flight);
+            // we only have airport ids, not airports, if we don't find the airport
+            // objects the ui will explode when it wants the airport names.
+        let flightForState:Flight = { ...flight, 
+            DepartureAirport : FindAirportFromId(flight.DepartureAirportId, airports),
+            ArrivalAirport : FindAirportFromId(flight.ArrivalAirportId, airports)};
         dispatch({
             type: CREATE_FLIGHT,
-            payload: res.data,
+            payload: flightForState,
         });
         return Promise.resolve(res.data);
     } catch (err) {
@@ -38,19 +53,38 @@ export const getFlights = () => async (dispatch:AppDispatch) => {
     }
 }
 
-export function updateFlight(id: number, flight: xFlight){
-    return {
-        type: UPDATE_FLIGHT,
-        payload: {id, flight}
+export const updateFlight = (id: number, flight: xFlight, airports:Airport[]) => async (dispatch:AppDispatch) => {
+    // we only have airport ids, not airports, if we don't find the airport
+    // objects the ui will explode when it wants the airport names.
+    try{
+        console.log("Update Flight()");
+        const res = await FlightDataService.update(flight);
+        let flightForState:Flight = { ...flight, 
+            DepartureAirport : FindAirportFromId(flight.DepartureAirportId, airports),
+            ArrivalAirport : FindAirportFromId(flight.ArrivalAirportId, airports)
+        };
+        console.log(flightForState);
+        dispatch({
+            type: UPDATE_FLIGHT,
+            payload: { ...flightForState}});
+
+    } catch (err){
+        console.log(err);
     }
 }
 
-export function deleteFlight(id: number){
-    return {
-        type: DELETE_FLIGHT,
-        payload: {id}
+export const deleteFlight = (id: number) => async (dispatch:AppDispatch) => {
+    try {
+        await FlightDataService.delete(id);
+        dispatch({
+            type: DELETE_FLIGHT,
+            payload: { id }
+        });
+    } catch (err) {
+        console.log(err);
     }
 }
+
 
 // Reducer
 
@@ -65,11 +99,14 @@ export default function FlightReducer(flights : Flight[] = initialState, action:
         case UPDATE_FLIGHT: {
             let newList:Flight[] = flights.map((p) => { 
                 if(p.Id === action.payload.Id){
+                    console.log(`found paylod id ${action.payload.Id}`);
                     return { ...p, ...action.payload }
                 } else{
                     return {...p};
                 }
             })
+            console.log("UPDATE_FLIGHT LIST")
+            console.log(newList);
              return newList;
         }
         case GET_FLIGHTS:

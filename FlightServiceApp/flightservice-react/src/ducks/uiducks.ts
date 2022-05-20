@@ -1,6 +1,7 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { DELETE_PASSENGER, UPDATE_PASSENGER, CREATE_PASSENGER } from "./passengerducks";
 import { DELETE_FLIGHT, UPDATE_FLIGHT, CREATE_FLIGHT } from "./flightducks";
+import Passenger from "../models/passenger";
 
 
 
@@ -14,7 +15,9 @@ const SEARCH_FLIGHT: string = 'SEARCH_FLIGHT'
 const SELECT_FLIGHT: string = 'SELECT_FLIGHT'
 const UNSELECT_FLIGHT: string = 'UNSELECT_FLIGHT'
 const OPEN_ADD_FLIGHT_FORM: string = 'OPEN_ADD_FLIGHT-FORM'
-const SELECT_AIRPORT: string = 'SELECT_ARRIVAL_AIRPORT'
+const SHOW_PASSENGER_LIST: string = 'SHOW_PASSENGER_LIST'
+const HIDE_PASSENGER_LIST: string = 'HIDE_PASSENGER_LIST'
+
 
 
 // Actions
@@ -78,23 +81,19 @@ export const unselectFlight = () =>{
             payload: {undefined}
         });
 }
-
-export const selectAirport =  (key:string, identifier: number) => {
+export const showPassengerList = () => {
     return ({
-        type: SELECT_AIRPORT,
-        payload: {key: key, identifier: identifier}
-    });
+        type: SHOW_PASSENGER_LIST,
+        payload: {}});
 }
+export const hidePassengerList = (selectedFlight: number) => {
+    return ({
+        type: HIDE_PASSENGER_LIST,
+        payload: {}});
+}
+
 
 // Reducer
-export class AirportSelectorType {
-    AddDepartureAirport : number | undefined
-    AddArrivalAirport : number | undefined
-    EditDepartureAirport : number | undefined
-    EditArrivalAirport : number | undefined
-}
-
-
 
 export type uiReducerStateType = {
     filterText : string
@@ -103,7 +102,8 @@ export type uiReducerStateType = {
     selectedFlight : number | undefined
     flightFilterText : ""
     addFlightFormVisible : boolean
-    selectedAirport: AirportSelectorType|never[]
+    showPassengerList : boolean
+    currentFlightList : Passenger[]
 }
 
 
@@ -116,12 +116,8 @@ const initialState : uiReducerStateType = {
     selectedFlight : undefined,
     flightFilterText : "",
     addFlightFormVisible : false,
-    selectedAirport : {
-        AddDepartureAirport : undefined,
-        AddArrivalAirport : undefined,
-        EditDepartureAirport : undefined,
-        EditArrivalAirport : undefined
-    }
+    showPassengerList : false,
+    currentFlightList : []
 };
 
 export default function uiReducer(myState: uiReducerStateType | undefined = initialState, action:AnyAction) {
@@ -148,7 +144,9 @@ export default function uiReducer(myState: uiReducerStateType | undefined = init
         case CREATE_PASSENGER:
         case UNSELECT_PASSENGER: {
             let updatevals = { addPassengerFormVisible : false,
-                                selectedPassenger: undefined }
+                                selectedPassenger: undefined,
+                                showItinerary: false,
+                                showFlightPicker: false}
             return { ...myState, ...updatevals }
         }
         case SEARCH_FLIGHT: {
@@ -163,42 +161,25 @@ export default function uiReducer(myState: uiReducerStateType | undefined = init
             return { ...myState, ...updatevals }
         }
         case OPEN_ADD_FLIGHT_FORM:{
-            let updatevals = { addFlightFormVisible : true,
-                                selectedFlight : undefined 
+            let updatevals = { addFlightFormVisible : true
                             }
             return { ...myState, ...updatevals }
 
         }
-        case SELECT_AIRPORT:{
-            let newval:AirportSelectorType = ({ ...myState.selectedAirport}) as AirportSelectorType;
-            switch(action.payload.key)
-            {
-                case "AddDepartureAirport":
-                    newval.AddDepartureAirport = action.payload.identifier;
-                    break;
-                case "AddArrivalAirport" : 
-                    newval.AddArrivalAirport = action.payload.identifier;
-                    break;
-                case "EditDepartureAirport" : 
-                    newval.EditDepartureAirport = action.payload.identifier;
-                    break;
-                case "EditArrivalAirport" :
-                    newval.EditArrivalAirport = action.payload.identifier;
-                    break;
-                default:
-                    return myState;
-            }
-           let updatevals = { selectedAirport : newval }
-            console.log(updatevals);
-            console.log({ ...myState, ...updatevals});
+        case HIDE_PASSENGER_LIST:{
+            let updatevals = { showPassengerList : false }
+            return { ...myState, ...updatevals }
+        }
+        case SHOW_PASSENGER_LIST:{
+            let updatevals = { showPassengerList : true }
             return { ...myState, ...updatevals }
         }
         case UPDATE_FLIGHT:
         case CREATE_FLIGHT:
         case UNSELECT_FLIGHT: {
             let updatevals = { addFlightFormVisible : false,
-                                selectedFlight: undefined,
-                                selectedAirport: [] }
+                                selectedFlight: undefined
+            }
             return { ...myState, ...updatevals }
         }        
         case DELETE_FLIGHT:

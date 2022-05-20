@@ -8,23 +8,21 @@ import { RootState } from "../store";
 export const FlightView = (props:any) => {
     const flightId = useSelector((state:RootState) => state.ui.selectedFlight);
     const addFlightFormVisible = useSelector((state:RootState) => state.ui.addFlightFormVisible);
+    var containerDivClassName = "row no-gutters p-1";
+    var listDivClassName = "col-9";
+    var formDivClassName = "col-3 font-weight-normal";
     if(flightId === undefined){
         if(!addFlightFormVisible){
-            var containerDivClassName = "container-fluid";
-            var listDivClassName = "container-fluid";
-            var formDivClassName = "";
+            containerDivClassName = "container-fluid";
+            listDivClassName = "container-fluid";
+            formDivClassName = "";
         }
         else {
-            var containerDivClassName = "row justify-content-xl-left no-gutters p-1";
-            var listDivClassName = "col-9";
-            var formDivClassName = "col-3 font-weight-normal";            
+            containerDivClassName = "row justify-content-xl-left no-gutters p-1";
+            listDivClassName = "col-9";
+            formDivClassName = "col-3 font-weight-normal";            
         }
     } 
-    else {
-        var containerDivClassName = "row no-gutters p-1";
-        var listDivClassName = "col-9";
-        var formDivClassName = "col-3 font-weight-normal";
-    }
       return (
           <div className="container-fluid" >
               <div className = {containerDivClassName}>
