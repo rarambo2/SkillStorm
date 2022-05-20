@@ -16,12 +16,12 @@ function PassengerSearchBar () {
   let buttoncode = (<></>);  
   if(formVisible){
     buttoncode = (<button disabled type="button" 
-    className="btn btn-secondary col">Add New Passenger</button>);
+    className="btn btn-primary col">Add New Passenger</button>);
   }
   else
   {
     buttoncode =  (<button onClick={(e:any)=>dispatch(showAddPassengerForm())}
-      className="btn btn-secondary col">
+      className="btn btn-primary col">
         Add New Passenger
         </button>);
   }

@@ -16,12 +16,12 @@ function FlightSearchBar () {
   let buttoncode = (<></>);
   if(formVisible){
     buttoncode = (<button disabled type="button" 
-    className="btn btn-secondary col">Add New Flight</button>);
+    className="btn btn-primary col">Add New Flight</button>);
   }
   else
   {
     buttoncode =  (<button onClick={(e:any)=>dispatch(showAddFlightForm())}
-      className="btn btn-secondary col">
+      className="btn btn-primary col">
         Add New Flight
         </button>);
   }

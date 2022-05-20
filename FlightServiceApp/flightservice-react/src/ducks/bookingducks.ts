@@ -38,25 +38,28 @@ export const addBooking = (PassengerId:number, FlightId:number) => async (dispat
         const res = await PassengerDataService.createBooking(booking);
         dispatch({
             type: ADD_BOOKING, 
-            payload:undefined
+            payload:{PassengerId : PassengerId,
+                BookingId : res.data
+            }
         });
-
-        console.log(res.data);
     } catch (err){
         console.log(err);
     }
 }
 
 export type FlightPassengerManifestType = {[Id : number]: Passenger[]}
+export type BookingIdsByPassengerIdType = {[Id : number]: number}
 
 
 export type BookingReducerStateType = {
-    PassengerManifestsByFlightId : FlightPassengerManifestType};
+    PassengerManifestsByFlightId : FlightPassengerManifestType
+    BookingIdsByPassengerId : BookingIdsByPassengerIdType};
 
 
 
 const initialState : BookingReducerStateType = {
-    PassengerManifestsByFlightId : {}
+    PassengerManifestsByFlightId : {},
+    BookingIdsByPassengerId : {}
 };
 
 // Reducer
@@ -68,6 +71,13 @@ export default function bookingReducer(myState:BookingReducerStateType = initial
             let lastval = { ...(myState.PassengerManifestsByFlightId)};
             lastval[action.payload.FlightId as number] = action.payload.Passengers as Passenger[];
             let updateval = { PassengerManifestsByFlightId : lastval };
+            let retval = { ...myState, ...updateval };
+             return retval;
+        }
+        case ADD_BOOKING:{
+            let lastval = { ...(myState.BookingIdsByPassengerId)};
+            lastval[action.payload.PassengerId as number] = action.payload.BookingId as number;
+            let updateval = { BookingIdsByPassengerId : lastval };
             let retval = { ...myState, ...updateval };
              return retval;
         }
