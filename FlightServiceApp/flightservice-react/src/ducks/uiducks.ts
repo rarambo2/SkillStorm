@@ -86,7 +86,7 @@ export const showPassengerList = () => {
         type: SHOW_PASSENGER_LIST,
         payload: {}});
 }
-export const hidePassengerList = (selectedFlight: number) => {
+export const hidePassengerList = () => {
     return ({
         type: HIDE_PASSENGER_LIST,
         payload: {}});
@@ -161,7 +161,10 @@ export default function uiReducer(myState: uiReducerStateType | undefined = init
             return { ...myState, ...updatevals }
         }
         case OPEN_ADD_FLIGHT_FORM:{
-            let updatevals = { addFlightFormVisible : true
+            let updatevals = { addFlightFormVisible : true,
+                                showPassengerList : false,
+                                selectedFlight : undefined
+
                             }
             return { ...myState, ...updatevals }
 
@@ -178,7 +181,8 @@ export default function uiReducer(myState: uiReducerStateType | undefined = init
         case CREATE_FLIGHT:
         case UNSELECT_FLIGHT: {
             let updatevals = { addFlightFormVisible : false,
-                                selectedFlight: undefined
+                                selectedFlight: undefined,
+                                showPassengerList : false
             }
             return { ...myState, ...updatevals }
         }        

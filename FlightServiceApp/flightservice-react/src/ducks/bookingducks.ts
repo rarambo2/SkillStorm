@@ -3,6 +3,7 @@ import PassengerDataService from "../services/passengerService";
 import { AppDispatch } from "../store";
 import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "../store"
+import Booking from "../models/booking";
 
 // This is not specifically for bookings but for API calls that reference 
 // the booking, flight and passenger tables for the UI
@@ -11,19 +12,36 @@ import { RootState } from "../store"
 // Constants
 export const GET_FLIGHT_PASSENGER_LIST = 'GET_FLIGHT_PASSENGER_LIST';
 export const ADD_PASSENGER_TO_FLIGHT = 'ADD_PASSENGER_TO_FLIGHT';
+export const ADD_BOOKING = 'ADD_BOOKING';
 
 
 // Actions
 export const getFlightPassengerList = (Id:number) => async (dispatch:AppDispatch) => {
     try {
+        console.log("getFlightPassengerList");
         const res = await PassengerDataService.getPassengersForFlight(Id);
         dispatch({
             type: GET_FLIGHT_PASSENGER_LIST,
             payload: {FlightId : Id,
-                Passengers : res.data
+                Passengers : res.data === undefined?[]:res.data
                     }
         });
-        
+    } catch (err){
+        console.log(err);
+    }
+}
+
+export const addBooking = (PassengerId:number, FlightId:number) => async (dispatch:AppDispatch) => {
+    try {
+        console.log("addBooking");
+        const booking = {PassengerId : PassengerId, FlightId : FlightId, Id : -1}
+        const res = await PassengerDataService.createBooking(booking);
+        dispatch({
+            type: ADD_BOOKING, 
+            payload:undefined
+        });
+
+        console.log(res.data);
     } catch (err){
         console.log(err);
     }
@@ -44,16 +62,15 @@ const initialState : BookingReducerStateType = {
 // Reducer
 
 export default function bookingReducer(myState:BookingReducerStateType = initialState, action:AnyAction) {
-    console.log(`PassengerReducer called with ${action.typef}`);
+    console.log(`PassengerReducer called with ${action.type}`);
     switch(action.type){
         case GET_FLIGHT_PASSENGER_LIST:{
-            
             let lastval = { ...(myState.PassengerManifestsByFlightId)};
-            lastval[action.payload.FlightId as number] = action.payload.passengers as Passenger[];
+            lastval[action.payload.FlightId as number] = action.payload.Passengers as Passenger[];
             let updateval = { PassengerManifestsByFlightId : lastval };
-            return { ...myState, ...updateval };
+            let retval = { ...myState, ...updateval };
+             return retval;
         }
-
         default:
             return myState;
     }

@@ -77,12 +77,13 @@ namespace FlightService.Controllers
         // POST: api/Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(Booking booking)
+        public async Task<ActionResult<Booking>> PostBooking(DTOBooking booking)
         {
-            _context.Bookings.Add(booking);
+            Booking newBooking = new(booking);
+                _context.Bookings.Add(newBooking);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBooking", new { id = booking.Id }, booking);
+            return CreatedAtAction("GetBooking", new { id = newBooking.Id }, newBooking);
         }
 
         // DELETE: api/Bookings/5

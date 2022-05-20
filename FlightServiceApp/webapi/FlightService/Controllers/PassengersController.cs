@@ -49,7 +49,7 @@ namespace FlightService.Controllers
             // we are actually getting passed a flight id, not a passenger or booking id.
 
             return await _context.Bookings.Where(x => x.FlightId == id)
-                .Include(y => y.Passenger).Select(x => x.Passenger).ToListAsync();
+                .Include(y => y.Passenger).Select(x => x.Passenger).OrderBy(x => x.LastName).ToListAsync();
              
         }
 

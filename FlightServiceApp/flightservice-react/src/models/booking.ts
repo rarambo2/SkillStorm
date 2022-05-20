@@ -1,7 +1,7 @@
 interface Booking {
     Id: number;
-    PassengerId: string;
-    FlightId: string;
+    PassengerId: number;
+    FlightId: number;
 }
 
 export default Booking;

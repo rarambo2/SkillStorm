@@ -66,7 +66,6 @@ export const updatePassenger = (passenger : Passenger) => async(dispatch:AppDisp
 
 export const deletePassenger = (id : number) => async(dispatch:AppDispatch) => {
     try {
-        console.log(`deletePassenger: ${id}`);
         await PassengerDataService.delete(id);
         dispatch({
             type: DELETE_PASSENGER,

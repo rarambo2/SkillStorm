@@ -2,11 +2,12 @@ import { AppDispatch, RootState } from "../../store";
 import Flight, { xFlight } from "../../models/flight";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { unselectFlight,  showPassengerList } from "../../ducks/uiducks";
+import { unselectFlight,  showPassengerList, hidePassengerList } from "../../ducks/uiducks";
 import { updateFlight, addFlight } from "../../ducks/flightducks";
 import AirportSelectMenu from "./airportselectmenu";
 import DateTimePicker from "./datetimepicker";
 import Airport from "../../models/airport";
+
 
 export const FlightAddForm = (props:any)=>{
 
@@ -15,6 +16,8 @@ export const FlightAddForm = (props:any)=>{
     const addNewFlight = useSelector((state:RootState) => state.ui.addFlightFormVisible);
     const fid = useSelector((state:RootState) => state.ui.selectedFlight);
     let flight = useSelector((state:RootState) => (state.flights.filter((p:Flight) => p.Id === fid)).pop()) ?? undefined;
+    const PassengerListVisible = useSelector((state:RootState) => state.ui.showPassengerList);
+    let ButtonText = PassengerListVisible? "Hide Assigned Passengers" : "View Assigned Passengers" ;
     const [FlightId, setFlightId] = useState(flight === undefined? -1 : flight.Id);
     const [FlightNumber, setFlightNumber] = useState(flight === undefined? "" : flight.FlightNumber);
     const [DepartureAirportId, setDepartureAirportId] = useState(flight === undefined? "" : flight.DepartureAirportId);
@@ -43,13 +46,19 @@ export const FlightAddForm = (props:any)=>{
         setArrivalDate(flight.ArrivalDate);
         setPassengerLimit(flight.PassengerLimit);
     }
-     if(fid === undefined && !addNewFlight){
+    var buttonText = <></>;
+    if(!addNewFlight) {
+        buttonText = <button type="button" className="btn btn-primary m-2" onClick={(e:any) => togglePassengerList(dispatch, PassengerListVisible, e)}>{ButtonText}</button>
+    }  
+    if(fid === undefined && !addNewFlight){
         return (<></>);
+ 
+        
     } else {   
  
-
+        let formStyleString = PassengerListVisible? "bg-info p-3" : "bg-info p-3  sticky-top"
         return(
-            <form className="bg-info p-3  sticky-top" onSubmit={(e:any) => {handleSubmit({
+            <form className={formStyleString} onSubmit={(e:any) => {handleSubmit({
                 Id : FlightId,
                 FlightNumber : FlightNumber==""?-1:FlightNumber,
                 DepartureAirportId : DepartureAirportId==""? -1: DepartureAirportId,
@@ -87,9 +96,18 @@ export const FlightAddForm = (props:any)=>{
             </div>
              <button type="reset" className="btn btn-primary m-2" onClick={(e:any) => handleCancel(dispatch,e)}>Cancel</button>
             <button type="submit" className="btn btn-primary m-2">Save</button>
-            <button type="button" className="btn btn-primary m-2" onClick={() => dispatch(showPassengerList())}>View Assigned Passengers</button>
+            {buttonText}
             </form>
         );
+    }
+}
+
+const togglePassengerList = (dispatch:AppDispatch, passengerListVisible: boolean, e:any) => {
+    if(passengerListVisible){
+        dispatch(hidePassengerList());
+    }
+    else{
+        dispatch(showPassengerList());
     }
 }
 

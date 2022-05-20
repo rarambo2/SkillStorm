@@ -57,7 +57,6 @@ export const updateFlight = (id: number, flight: xFlight, airports:Airport[]) =>
     // we only have airport ids, not airports, if we don't find the airport
     // objects the ui will explode when it wants the airport names.
     try{
-        console.log("Update Flight()");
         const res = await FlightDataService.update(flight);
         let flightForState:Flight = { ...flight, 
             DepartureAirport : FindAirportFromId(flight.DepartureAirportId, airports),

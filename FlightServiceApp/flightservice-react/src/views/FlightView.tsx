@@ -1,5 +1,6 @@
 import FlightList from "../components/flight/flightlist";
 import FlightAddForm from "../components/flight/flightaddform"; 
+import FlightBookingList from "../components/flight/flightbookinglist";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -32,6 +33,7 @@ export const FlightView = (props:any) => {
                 </div>
                 <div className={formDivClassName}>
                     <FlightAddForm />
+                    <FlightBookingList />
                 </div>
 
             </div>

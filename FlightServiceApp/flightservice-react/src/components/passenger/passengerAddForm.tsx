@@ -81,7 +81,7 @@ export const PassengerAddForm = (props:any)=>{
                 </div>            
                 <button type="reset" className="btn btn-primary m-2" onClick={(e:any) => handleCancel(dispatch,e)}>Cancel</button>
                 <button type="submit" className="btn btn-primary m-2">Save</button>
-
+                
                 </form>
             );
                 

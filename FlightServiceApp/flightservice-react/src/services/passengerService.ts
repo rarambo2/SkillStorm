@@ -1,5 +1,6 @@
 import http from "../http-common";
 import Passenger from "../models/passenger";
+import Booking from "../models/booking";
 
 class PassengerDataService {
     getAll(){
@@ -27,6 +28,11 @@ class PassengerDataService {
     }
     getPassengersForFlight(id : number) {
         return http.get(`/Passengers/${id}/booked`)
+    }
+    createBooking(b : Booking){
+        console.log(b);
+        return http.post(`/Bookings/`, {PassengerId: b.PassengerId, FlightId: b.FlightId });
+
     }
 }
 
