@@ -2,13 +2,13 @@ import http from "../http-common";
 import { xFlight } from "../models/flight";
 
 class FlightDataService {
-    getAll(){
+    getAll() {
         return http.get("/Flights");
     }
-    get(id : number) {
+    get(id: number) {
         return http.get(`/Flights/${id}`);
     }
-    create(flight : xFlight) {
+    create(flight: xFlight) {
         // omitted Id since  database will assign one.
         console.log("Flight create");
         let newFlight = {
@@ -17,14 +17,14 @@ class FlightDataService {
             ArrivalDate: (new Date(flight.ArrivalDate)).toJSON(),
             DepartureAirportId: flight.DepartureAirportId,
             ArrivalAirportId: flight.ArrivalAirportId,
-            PassengerLimit: parseInt(flight.PassengerLimit.toString()).toString()       
+            PassengerLimit: parseInt(flight.PassengerLimit.toString()).toString()
         }
         console.log(newFlight);
         let retval = http.post("/Flights", newFlight);
         console.log(retval);
         return retval;
     }
-    update(flight : xFlight) {
+    update(flight: xFlight) {
         let newFlight = {
             Id: flight.Id,
             FlightNumber: parseInt(flight.FlightNumber.toString()),
@@ -32,15 +32,15 @@ class FlightDataService {
             ArrivalDate: (new Date(flight.ArrivalDate)).toJSON(),
             DepartureAirportId: flight.DepartureAirportId,
             ArrivalAirportId: flight.ArrivalAirportId,
-            PassengerLimit: parseInt(flight.PassengerLimit.toString()) 
-        } 
+            PassengerLimit: parseInt(flight.PassengerLimit.toString())
+        }
         console.log("flight update()")
         console.log(newFlight);
         let retval = http.put(`/Flights/${flight.Id}`, newFlight);
         console.log(retval);
         return http.put(`/Flights/${flight.Id}`, newFlight);
     }
-    delete(id : number) {
+    delete(id: number) {
         console.log(`FlightDataService.delete ${id}`);
         return http.delete(`/Flights/${id}`);
     }

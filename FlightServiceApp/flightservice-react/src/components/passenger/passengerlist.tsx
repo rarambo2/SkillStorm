@@ -6,25 +6,25 @@ type PassengerListProps = {
 }
 
 type PassengerListState = {
-  selectedPassenger: number|undefined;
+  selectedPassenger: number | undefined;
 }
 
-class PassengerList extends React.Component <any, PassengerListState>{
-  constructor(props:PassengerListProps){
+class PassengerList extends React.Component<any, PassengerListState>{
+  constructor(props: PassengerListProps) {
     super(props);
 
     this.state = {
-      selectedPassenger : undefined
+      selectedPassenger: undefined
     }
   }
 
-  
+
   render() {
     return (
-          <div className="container-fluid">
-          <PassengerSearchBar />
-          <PassengerTable />
-          </div>
+      <div className="container-fluid">
+        <PassengerSearchBar />
+        <PassengerTable />
+      </div>
     );
   }
 }

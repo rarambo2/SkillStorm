@@ -1,29 +1,30 @@
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import {xAirport} from "../../models/airport";
+import { xAirport } from "../../models/airport";
 import AirportSelectMenuOptions from "./airportselectmenuoptions";
-import Form  from "react-bootstrap/Form";
+import Form from "react-bootstrap/Form";
 
 
 
 type AirportSelectMenuProps = {
-    value : number
-    id : string
-    handler : any
-    flightid : number
+    value: number
+    id: string
+    handler: any
+    flightid: number
 }
 
-const AirportSelectMenu = (props:AirportSelectMenuProps) : JSX.Element => {
-    const airports = useSelector((state:RootState) => state.airports);
+const AirportSelectMenu = (props: AirportSelectMenuProps): JSX.Element => {
+    const airports = useSelector((state: RootState) => state.airports);
 
-    const rendered : JSX.Element[] = [];
-    airports.forEach((airport:xAirport) => {
-        rendered.push(<AirportSelectMenuOptions airport={airport} key={airport.Id}/>)});
+    const rendered: JSX.Element[] = [];
+    airports.forEach((airport: xAirport) => {
+        rendered.push(<AirportSelectMenuOptions airport={airport} key={airport.Id} />)
+    });
 
-    return(
-        <Form.Select required className="custom-select border-dark" id={props.id} defaultValue={props.value === undefined ?"":props.value}
-        onChange={(e:any) => props.handler(parseInt(e.target.value))}>
-        {rendered}
+    return (
+        <Form.Select required className="custom-select border-dark" id={props.id} defaultValue={props.value === undefined ? "" : props.value}
+            onChange={(e: any) => props.handler(parseInt(e.target.value))}>
+            {rendered}
         </Form.Select>
     );
 }

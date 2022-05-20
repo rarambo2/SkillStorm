@@ -1,7 +1,7 @@
 
 export interface xAirport {
-    Id : number;
-    AirportName : string;
+    Id: number;
+    AirportName: string;
     IATACode: string;
     Municipality: string;
     IsoRegion: string;

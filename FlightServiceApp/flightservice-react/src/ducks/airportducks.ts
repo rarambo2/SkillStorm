@@ -6,12 +6,12 @@ import { AppDispatch } from "../store";
 export const CREATE_AIRPORT: string = 'CREATE_AIRPORT'
 export const UPDATE_AIRPORT: string = 'UPDATE_AIRPORT'
 export const DELETE_AIRPORT: string = 'DELETE_AIRPORT'
-const GET_AIRPORTS : string = 'GET_AIRPORTS'
-const GET_AIRPORT : string = 'GET_AIRPORT'
+const GET_AIRPORTS: string = 'GET_AIRPORTS'
+const GET_AIRPORT: string = 'GET_AIRPORT'
 
 // Actions
 
-export const getAirports = () => async (dispatch:AppDispatch) => {
+export const getAirports = () => async (dispatch: AppDispatch) => {
     try {
         console.log("getAirports()");
         const res = await AirportDataService.getAll();
@@ -19,8 +19,8 @@ export const getAirports = () => async (dispatch:AppDispatch) => {
             type: GET_AIRPORTS,
             payload: res.data
         });
-        
-    } catch (err){
+
+    } catch (err) {
         console.log(err);
     }
 }
@@ -41,30 +41,30 @@ export const getAirports = () => async (dispatch:AppDispatch) => {
 
 // Reducer
 
-const initialState : Airport[] = [];
+const initialState: Airport[] = [];
 
-export default function AirportReducer(airports : Airport[] = initialState, action:any){
+export default function AirportReducer(airports: Airport[] = initialState, action: any) {
     console.log(`AirportReducer called with ${action.type}`);
-    switch(action.type){
+    switch (action.type) {
         case CREATE_AIRPORT: {
-            return[...airports, action.payload];
+            return [...airports, action.payload];
         }
         case UPDATE_AIRPORT: {
-            let newList:Airport[] = airports.map((p) => { 
-                if(p.Id === action.payload.Id){
+            let newList: Airport[] = airports.map((p) => {
+                if (p.Id === action.payload.Id) {
                     return { ...p, ...action.payload }
-                } else{
-                    return {...p};
+                } else {
+                    return { ...p };
                 }
             })
-             return newList;
+            return newList;
         }
         case GET_AIRPORTS:
             return action.payload;
         case GET_AIRPORT:
             return action.payload;
         case DELETE_AIRPORT: {
-            return airports.filter(({Id}) => Id !== action.payload.id);
+            return airports.filter(({ Id }) => Id !== action.payload.id);
         }
         default:
             return airports;

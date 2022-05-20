@@ -1,39 +1,32 @@
 import http from "../http-common";
 import Passenger from "../models/passenger";
-import Booking from "../models/booking";
+
 
 class PassengerDataService {
-    getAll(){
+    getAll() {
         return http.get("/Passengers");
     }
-    get(id : number) {
+    get(id: number) {
         return http.get(`/Passengers/${id}`);
     }
-    create(passenger : Passenger) {
+    create(passenger: Passenger) {
         // omitted Id since database will assign one.
         let newPass = {
-            FirstName : passenger.FirstName,
-            LastName : passenger.LastName,
-            Age : passenger.Age,
-            Email : passenger.Email,
-            Job : passenger.Job
+            FirstName: passenger.FirstName,
+            LastName: passenger.LastName,
+            Age: passenger.Age,
+            Email: passenger.Email,
+            Job: passenger.Job
         }
         return http.post("/Passengers", newPass);
     }
-    update(passenger : Passenger) {
+    update(passenger: Passenger) {
         return http.put(`/Passengers/${passenger.Id}`, passenger);
     }
-    delete(id : number) {
+    delete(id: number) {
         return http.delete(`/Passengers/${id}`);
     }
-    getPassengersForFlight(id : number) {
-        return http.get(`/Passengers/${id}/booked`)
-    }
-    createBooking(b : Booking){
-        console.log(b);
-        return http.post(`/Bookings/`, {PassengerId: b.PassengerId, FlightId: b.FlightId });
 
-    }
 }
 
 

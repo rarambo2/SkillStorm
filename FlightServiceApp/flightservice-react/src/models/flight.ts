@@ -10,7 +10,7 @@ export interface xFlight {
     PassengerLimit: number;
 }
 
-interface Flight extends xFlight{
+interface Flight extends xFlight {
     ArrivalAirport: xAirport;
     DepartureAirport: xAirport;
 }

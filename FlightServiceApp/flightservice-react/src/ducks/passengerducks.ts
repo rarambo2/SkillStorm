@@ -12,32 +12,31 @@ export const GET_PASSENGER: string = 'GET_PASSENGER'
 
 
 // Actions
-export const getPassengers = () => async (dispatch:AppDispatch) => {
+export const getPassengers = () => async (dispatch: AppDispatch) => {
     try {
-        console.log("getPassengers()");
         const res = await PassengerDataService.getAll();
         dispatch({
             type: GET_PASSENGERS,
             payload: res.data
         });
-        
-    } catch (err){
+
+    } catch (err) {
         console.log(err);
     }
 }
-export const getPassenger = (id:number) => async (dispatch:AppDispatch) => {
+export const getPassenger = (id: number) => async (dispatch: AppDispatch) => {
     try {
         const res = await PassengerDataService.get(id);
         dispatch({
             type: GET_PASSENGER,
             payload: res.data
         });
-    } catch (err){
+    } catch (err) {
         console.log(err);
     }
 }
 
-export const addPassenger = (passenger : Passenger) => async (dispatch:AppDispatch) => {
+export const addPassenger = (passenger: Passenger) => async (dispatch: AppDispatch) => {
     try {
         const res = await PassengerDataService.create(passenger);
         dispatch({
@@ -50,7 +49,7 @@ export const addPassenger = (passenger : Passenger) => async (dispatch:AppDispat
     }
 };
 
-export const updatePassenger = (passenger : Passenger) => async(dispatch:AppDispatch) => {
+export const updatePassenger = (passenger: Passenger) => async (dispatch: AppDispatch) => {
     try {
         const res = await PassengerDataService.update(passenger);
         dispatch({
@@ -59,12 +58,12 @@ export const updatePassenger = (passenger : Passenger) => async(dispatch:AppDisp
         })
         return Promise.resolve(res.data);
 
-    } catch(err) {
+    } catch (err) {
         return Promise.reject(err);
     }
 }
 
-export const deletePassenger = (id : number) => async(dispatch:AppDispatch) => {
+export const deletePassenger = (id: number) => async (dispatch: AppDispatch) => {
     try {
         await PassengerDataService.delete(id);
         dispatch({
@@ -79,30 +78,29 @@ export const deletePassenger = (id : number) => async(dispatch:AppDispatch) => {
 
 // Reducer
 
-const initialState : Passenger[] = [];
+const initialState: Passenger[] = [];
 
-export default function passengerReducer(passengers : Passenger[] = initialState, action:AnyAction) {
-    console.log(`PassengerReducer called with ${action.type}`);
-    switch(action.type){
+export default function passengerReducer(passengers: Passenger[] = initialState, action: AnyAction) {
+    switch (action.type) {
         case CREATE_PASSENGER: {
-            return[...passengers, action.payload];
+            return [...passengers, action.payload];
         }
         case UPDATE_PASSENGER: {
-            let newList:Passenger[] = passengers.map((p) => { 
-                if(p.Id === action.payload.Id){
+            let newList: Passenger[] = passengers.map((p) => {
+                if (p.Id === action.payload.Id) {
                     return { ...p, ...action.payload }
-                } else{
-                    return {...p};
+                } else {
+                    return { ...p };
                 }
             })
-             return newList;
+            return newList;
         }
         case GET_PASSENGERS:
             return action.payload;
         case GET_PASSENGER:
             return action.payload;
         case DELETE_PASSENGER: {
-            return passengers.filter(({Id}) => Id !== action.payload.id);
+            return passengers.filter(({ Id }) => Id !== action.payload.id);
         }
         default:
             return passengers;

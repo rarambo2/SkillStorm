@@ -6,22 +6,22 @@ type FlightListProps = {
 }
 
 type FlightListState = {
-  selectedFlight: number|undefined;
+  selectedFlight: number | undefined;
 }
 
-class FlightList extends React.Component <any, FlightListState>{
-  constructor(props:FlightListProps){
+class FlightList extends React.Component<any, FlightListState>{
+  constructor(props: FlightListProps) {
     super(props);
     this.state = {
-      selectedFlight : undefined
+      selectedFlight: undefined
     }
   }
   render() {
     return (
-          <div className="container-fluid">
-          <FlightSearchBar />
-          <FlightTable /> 
-          </div>
+      <div className="container-fluid">
+        <FlightSearchBar />
+        <FlightTable />
+      </div>
     );
   }
 }
