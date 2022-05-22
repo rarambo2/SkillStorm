@@ -12,6 +12,9 @@ class BookingDataService {
     getPassengersForFlight(id: number) {
         return http.get(`/Passengers/${id}/booked`)
     }
+    delete(id: number){
+        return http.delete(`/Bookings/${id}/`);
+    }
 
 }
 

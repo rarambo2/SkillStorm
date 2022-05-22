@@ -16,6 +16,7 @@ namespace FlightService.Library
             PassengerId = dbBooking.PassengerId;
             FlightId = dbBooking.FlightId;
         }
+
         public int PassengerId { get; set; }
         public int FlightId { get; set; }
         public int Id { get; set; }

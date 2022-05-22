@@ -192,7 +192,7 @@ export default function uiReducer(myState: uiReducerStateType | undefined = init
             return { ...myState, ...updatevals }
         }
         case FILTER_PASSENGER_PICKER: {
-            let updatevals = { filterPassengerPicker: action.payload.filterPassengerPicker }
+            let updatevals = { filterPassengerPicker: action.payload.filterPassengerVal }
             return { ...myState, ...updatevals }
         }
         case CREATE_FLIGHT:

@@ -13,7 +13,6 @@ const GET_AIRPORT: string = 'GET_AIRPORT'
 
 export const getAirports = () => async (dispatch: AppDispatch) => {
     try {
-        console.log("getAirports()");
         const res = await AirportDataService.getAll();
         dispatch({
             type: GET_AIRPORTS,
@@ -25,26 +24,12 @@ export const getAirports = () => async (dispatch: AppDispatch) => {
     }
 }
 
-// export function updateAirport(id: number, airport: Airport){
-//     return {
-//         type: UPDATE_AIRPORT,
-//         payload: {id, airport}
-//     }
-// }
-
-// export function deleteAirport(id: number){
-//     return {
-//         type: DELETE_AIRPORT,
-//         payload: {id}
-//     }
-// }
 
 // Reducer
 
 const initialState: Airport[] = [];
 
 export default function AirportReducer(airports: Airport[] = initialState, action: any) {
-    console.log(`AirportReducer called with ${action.type}`);
     switch (action.type) {
         case CREATE_AIRPORT: {
             return [...airports, action.payload];

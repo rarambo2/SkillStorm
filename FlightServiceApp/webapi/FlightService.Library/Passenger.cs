@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace FlightService.Library
 {
@@ -31,7 +32,7 @@ namespace FlightService.Library
         /// </summary>
         public int? Age { get; set; }
         public int Id { get; set; }
-
+        
         public virtual ICollection<Booking> Bookings { get; set; } = null!;
     }
 }
