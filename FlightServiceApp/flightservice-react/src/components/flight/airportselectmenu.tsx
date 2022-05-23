@@ -22,7 +22,7 @@ const AirportSelectMenu = (props: AirportSelectMenuProps): JSX.Element => {
     });
 
     return (
-        <Form.Select required className="custom-select border-dark" id={props.id} defaultValue={props.value === undefined ? "" : props.value}
+        <Form.Select required className="custom-select border-dark" id={props.id} value={props.value === undefined ? "" : props.value}
             onChange={(e: any) => props.handler(parseInt(e.target.value))}>
             {rendered}
         </Form.Select>
